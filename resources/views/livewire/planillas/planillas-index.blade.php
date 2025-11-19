@@ -35,9 +35,7 @@
                       </a> 
                 </div>
                 <div class="flex justify-end px-1 py-4 mr-4"> 
-{{--                       <a href="{{ route('Planillas.Create') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
- --}}                          
-                       <a href="{{ route('Planillas.Generar') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
+                      <a href="{{ route('Planillas.Generar') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
                              <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
                       </a>
                 </div>
@@ -49,7 +47,8 @@
                 <div class="flex flex-col gap-1">
                         <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                         <div class="flex items-start bg-gray-50 dark:bg-gray-600 rounded-xl ">
-                            <div class="me-2">
+                        <div class="me-2">
+                            <span class="px-2 text-xs font-bold text-white dark:text-white  bg-cyan-400 shadow-2xs"><i class="fas fa-file-medical-alt" style="color: white"></i> &nbsp; {{$planilla->empresa->nombre}} </span>
                             <span class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white pb-2">
                                 <svg fill="none" aria-hidden="true" class="w-5 h-5 shrink-0" viewBox="0 0 20 21">
                                     <g clip-path="url(#clip0_3173_1381)">
@@ -66,7 +65,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                            <p class="text-xs">{{__('Form Number')}}:</p><b>{{$planilla->nplanilla}}</b>
+                                <p class="text-xs">{{__('Form Number')}}:</p><b>{{$planilla->nplanilla}}</b>
                                 @if ($planilla->status == 0)
                                     <button  class="block text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-xs px-4 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" title="Pagar Planilla"
                                         wire:click="OpenModal({{ $planilla->id }})"> 
@@ -77,7 +76,43 @@
                                         <i class="fas fa-hands-helping fa-lg"></i>
                                     </button>
                                 @endif
-                                <!-- Main modal -->
+                             {{--   ==================== --}} 
+                            </span>
+                            <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
+                                {{$planilla->periodo_pension}} 
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
+                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
+                                </svg>
+                                {{$planilla->periodo_salud}}
+                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
+                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
+                                </svg>
+                                ${{number_format($planilla->total_pagado)}}
+                            </span>
+                        </div>
+                            <div class="self-center items-center">
+                                @if ($planilla->status == 0)
+                                    <button wire:click.prevent="ExpotPlanillasAportes({{$planilla->id}})" class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Download Contribution Form Online')}}">
+                                        <svg class="w-4 h-4 text-green-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+                                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+                                        </svg>
+                                    </button>
+                                    <button wire:click.prevent="ExpotPlanillasSimple({{$planilla->id}})" class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Download Simple Payment Form')}}">
+                                        <svg class="w-4 h-4 text-blue-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+                                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+                                        </svg> 
+                                    </button>
+                          
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+         <!-- Main modal -->
                                 @if ($modal)  
                                     <div class="relative z-20" aria-labelledby="dialog-title" role="dialog" aria-modal="true">
                                         <div class="fixed inset-0  transition-opacity" aria-hidden="true"></div>
@@ -128,7 +163,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                            <button wire:click.prevent="PagarPlanilla({{$selectedPlanillaId ?? 'null'}})" class="px-6 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300" title="Pagar Planiulla"><i class="far fa-money-bill-alt fa-lg"></i> &nbsp; {{__('Pay')}} </button>
+                                                            <button wire:click.prevent="PagarPlanilla" class="px-6 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300" title="Pagar Planiulla"><i class="far fa-money-bill-alt fa-lg"></i> &nbsp; {{__('Pay')}} </button>
                                                             <button wire:click.prevent="CloseModal()" class="px-2 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-slate-500 rounded-sm hover:bg-slate-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-slate-300" title="Salir"><i class="fas fa-window-close fa-stack fa-lg"></i>{{__('Cancel')}} </button>
                                                         </div>
                                                     </div>
@@ -136,54 +171,7 @@
                                         
                                         </div>
                                     </div> 
-                                @endif   
-                            </span>
-                            <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
-                                {{$planilla->periodo_pension}} 
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
-                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
-                                </svg>
-                                {{$planilla->periodo_salud}}
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
-                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
-                                </svg>
-                                ${{number_format($planilla->total_pagado)}}
-                            </span>
-                            </div>
-                            <div class="self-center items-center">
-                                @if ($planilla->status == 0)
-                                    <button wire:click.prevent="ExpotPlanillasAportes({{$planilla->id}})" class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Download Contribution Form Online')}}">
-                                        <svg class="w-4 h-4 text-green-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                                        </svg>
-                                    </button>
-                                    <button wire:click.prevent="ExpotPlanillasSimple({{$planilla->id}})" class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Download Simple Payment Form')}}">
-                                        <svg class="w-4 h-4 text-blue-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                                        </svg> 
-                                    </button>
-                          {{--       @else
-                                    <button class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Downloaded Form')}}">
-                                        <svg class="w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                                        </svg>
-                                    </button>
-                                    <button class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Downloaded Form')}}">
-                                        <svg class="w-4 h-4 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                                        </svg> 
-                                    </button>--}}
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
+                                @endif  
     @else
         <div class="px-6 py-4 text-red-400 font-bold font-serif text-sm">
             {{__('There are no records')}} .....

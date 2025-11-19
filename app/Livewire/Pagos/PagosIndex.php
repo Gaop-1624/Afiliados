@@ -16,7 +16,7 @@ class PagosIndex extends Component
 
     public $search;
     public $afiliadoId;
-    public $perPage = 6;
+    public $perPage = 3;
 
     public function ExportAllPagos(){
        return Excel::download(new PagosExport, 'pagos.xlsx'); 

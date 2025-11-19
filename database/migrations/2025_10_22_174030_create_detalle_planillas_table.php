@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('planilla_id')->constrained()->on('planillas')->nullable();
             $table->foreignId('afiliado_id')->constrained()->on('afiliados')->nullable();
+            $table->double('salario', 10, 2)->nullable();
+            $table->double('pago_id')->nullable();
+            $table->double('total_pagado', 10, 2)->nullable();
            // $table->string('dias');
             $table->timestamps();
         });

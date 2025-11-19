@@ -72,6 +72,7 @@ class CreateIngresosEgreso extends Component
                     'salida' => $salida,
                     'total' => $total,
                     'empresa_id' => $empresa,
+                    'user_id' => Auth::id()
             ]);
       
 

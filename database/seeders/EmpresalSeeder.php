@@ -36,7 +36,7 @@ class EmpresalSeeder extends Seeder
         $Empresal2->celular = '3127899689';
         $Empresal2->direccion = 'CLL 11 N 1-03';
         $Empresal2->email = 'dygdistribuidora@gmail.com';
-        $Empresal->save();
+        $Empresal2->save();
 
         $Empresal3 = new EmpresaLaboral();
         $Empresal3->nombre = 'DISEÑO Y PLANEACION PAP SAS';

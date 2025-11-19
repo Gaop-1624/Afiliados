@@ -501,6 +501,21 @@
    "New Companies": "Nueva Empresa",
    "Company information": "Información de la Empresa",
    "Web page": "Página web",
-   "Compensation Fund": "Caja de Compensación"
-
+   "Compensation Fund": "Caja de Compensación",
+   "New Company": "Nueva Empresa Laboral",
+   "New Labor Company": "Nueva Empresa Laboral",
+   "Name Labor Company": "Nombre Empresa donde labora",
+   "Contact Labor Company": "Contacto de la Empresa donde labora",
+   "Contact": "Contacto",
+   "Import Affiliates": "Importar Afiliados",
+   "Import Affiliates from Excel": "Importar Afiliados desde Excel",
+   "Matter": "Importar",
+   "Search Files...": "Buscar Archivos...",
+   "Upload and Import Affiliates": "Cargar e Importar Afiliados",
+    "The file must be in Excel format.": "El archivo debe estar en formato Excel.",
+    "There was an error importing the affiliates.": "Hubo un error al importar los afiliados.",
+    "Affiliates imported successfully.": "Afiliados importados con éxito",
+    "The file must be an Excel or CSV file.": "El archivo debe ser un archivo Excel o CSV.",
+    "List of Expenses": "Listado de Gastos",
+    "Spent Value": "Valor Gastado"
 }

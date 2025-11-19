@@ -13,7 +13,7 @@ class IngresosEgresosIndex extends Component
 
     public $fecha_inicio;
     public $fecha_fin;
-    public $perPage = 15;
+    public $perPage = 10;
     public $sumEntradas = 0;
     public $sumSalidas = 0;
 

@@ -185,7 +185,7 @@ class CreatePagos extends Component
            $novedad = null;
         }
         
-        
+        $empresaid = $afiliadoId[0]->contratos->last()->empresa_id;
 
         if ($ultimoPeriodo == $periodo ?? "") {
 
@@ -207,7 +207,7 @@ class CreatePagos extends Component
                             'periodo' => $periodo,
                             'user_id' => $user,
                             'dias' => $this->dias,
-                            'nplanilla' => 1,
+                            'nplanilla' => $empresaid,
                             'novedad' => $novedad
                         ]); 
 
@@ -231,7 +231,7 @@ class CreatePagos extends Component
                             'fecha_ingreso' => now(),
                             'mes' => now()->month,
                             'tipo' => 0,
-                            'detalle' => "Pago Mensual",
+                            'detalle' => "Pago Recibo No: ".$codigo1,
                             'entrada' => str_replace(',', '', $this->total),
                             'salida' => 0,
                             'total' => $total,

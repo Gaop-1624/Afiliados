@@ -3,12 +3,14 @@
 namespace App\Livewire\Afiliados;
 
 use App\Exports\AfiliadosExport;
+use App\Imports\AfiliadosImport;
 use App\Models\Afiliado;
 use App\Models\contrato;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 use Maatwebsite\Excel\Facades\Excel;
@@ -16,8 +18,54 @@ use Maatwebsite\Excel\Facades\Excel;
 class AfiliadosIndex extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
-    public $search, $status;
+    public $search, $status, $importfile;
+    public $modal = false;
+
+    public function limpiarModal(){
+        $this->resetValidation();
+        $this->reset(['importfile']);
+    }
+
+     public function OpenModal(){
+           $this->limpiarModal();
+            $this->modal = true;
+        }
+
+    public function CloseModal(){
+            $this->limpiarModal();
+            $this->modal = false;
+    }
+
+    public function Import(){
+         $this->validate([
+            'importfile' => 'required|mimes:xlsx,csv,xls',
+        ],[
+            'importfile.required' => __('Please select a file to upload.'),
+            'importfile.mimes' => __('The file must be an Excel or CSV file.'),
+        ]);   
+
+        try { 
+            // pasar directamente el archivo sin guardar en disco
+                Excel::import(new AfiliadosImport, $this->importfile);
+
+                LivewireAlert::title(__('File imported successfully'))
+                    ->success()
+                    ->show();
+
+                $this->reset(['importfile']);
+                $this->CloseModal();
+                $this->resetPage();
+
+        } catch (\Exception $e) {
+                LivewireAlert::title(__('There was an error importing the affiliates.'))
+                    ->text($e->getMessage())
+                    ->error()
+                    ->show();
+        } 
+    }
+    
 
     public function update(Afiliado $afiliado){
         return redirect()->route('Afiliados.Edit', ['afiliadoId' => $afiliado->id]);
@@ -69,7 +117,7 @@ class AfiliadosIndex extends Component
             });
         }
 
-        $afiliados = $query->orderBy('id','DESC')->paginate(6);
+        $afiliados = $query->orderBy('id','DESC')->paginate(3);
 
         return view('livewire.afiliados.afiliados-index', [
             'afiliados' => $afiliados,

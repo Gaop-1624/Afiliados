@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('snombre', 50)->nullable();
             $table->string('papellido', 50);
             $table->string('sapellido', 50)->nullable();
-            $table->string('direccion', 50);
-            $table->string('telefono', 20)->nullable();
-            $table->string('celular', 20);
-            $table->string('email', 50)->nullable();
+            $table->string('direccion', 100)->nullable();
+            $table->string('telefono', 50)->nullable();
+            $table->string('celular', 50);
+            $table->string('email', 100)->nullable();
             $table->date('fecha_nac')->nullable();
             $table->integer('sexo')->nullable();
             $table->foreignId('user_id')->constrained()->on('users')->nullable();

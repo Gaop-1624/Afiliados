@@ -12,7 +12,7 @@ class EmpresaLaboral extends Model
     protected $table = 'empresa_laborals';
 
     protected $fillable = [
-        'nombre', 'telefono', 'celular', 'direccion', 'email'
+        'nombre', 'telefono', 'celular', 'direccion', 'email','contacto'
     ];
 
  

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('periodo_pension');
             $table->double('total_pagado');
             $table->integer('status')->default('0');//0 Pagar 1 Pagada
-            $table->foreignId('empresa_id')->nullable()->on('empresas');
+            $table->foreignId('empresa_id')->nullable()->constrained()->on('empresas');
+            $table->foreignId('user_id')->constrained()->on('users')->nullable();
             $table->timestamps();
         });
     }

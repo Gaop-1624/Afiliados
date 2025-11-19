@@ -348,54 +348,148 @@
                     </div>
                 @endif 
             </div> 
-            <div class="grid grid-cols-2 gap-1 lg:grid-cols-2 lg:gap-2 mb-4  m-2">
-
-                      @if ($errors->first('empresaA_id')) 
-                        <div wire:ignore class="px-4 py-2 border bg-slate-100">
-                            <select wire:model.defer="empresaA_id" wire:ignore class="block w-full p-2 text-xs text-red-900 border border-red-300 rounded bg-red-50 focus:ring-red-500 focus:border-red-500">
-                                <option selected>{{__('Affiliate Company')}}</option>
-                                @foreach ( $empresaA as $empresaAf )
-                                    <option value="{{$empresaAf->id}}">{{$empresaAf->nombre}}</option>
-                                @endforeach 
-                            </select>
-                            <p class="mt-2 text-xs text-red-600">{{$errors->first('empresaA_id')}} </p>
-                        </div>
-                    @else
-                        <div  wire:ignore class="px-4 py-2 border bg-slate-100 h-12">
-                            <select wire:model.defer="empresaA_id" class="block w-full p-2 mb-6 text-xs text-gray-900 border border-gray-300  bg-gray-50 focus:ring-blue-500 focus:border-blue-500 h-8">
-                                <option selected>{{__('Affiliate Company')}}</option>
-                                @foreach ( $empresaA as $empresaAf )
-                                    <option value="{{$empresaAf->id}}">{{$empresaAf->nombre}}</option>
-                                @endforeach 
-                            </select>
-                        </div>
-                    @endif 
-                  @if ($errors->first('empresal_id')) 
-                        <div wire:ignore class="px-4 py-2 border bg-slate-100">
-                            <select wire:model.defer="empresal_id" wire:ignore class="block w-full p-2 text-xs text-red-900 border border-red-300 rounded bg-red-50 focus:ring-red-500 focus:border-red-500">
-                                <option selected>{{__('Labor Company')}}</option>
-                                @foreach ( $empresal as $empresale )
-                                    <option value="{{$empresale->id}}">{{$empresale->nombre}}</option>
-                                @endforeach 
-                            </select>
-                            <p class="mt-2 text-xs text-red-600">{{$errors->first('empresal_id')}} </p>
-                        </div>
-                    @else
-                        <div  wire:ignore class="px-4 py-2 border bg-slate-100 h-12">
-                            <select wire:model.defer="empresal_id" class="block w-full p-2 mb-6 text-xs text-gray-900 border border-gray-300  bg-gray-50 focus:ring-blue-500 focus:border-blue-500 h-8">
-                                <option selected>{{__('Labor Company')}}</option>
-                                @foreach ( $empresal as $empresale )
-                                    <option value="{{$empresale->id}}">{{$empresale->nombre}}</option>
-                                @endforeach 
-                            </select>
-                        </div>
-                    @endif  
-            
+            <div class="grid grid-cols-2 gap-1 lg:grid-cols-4 lg:gap-2 mb-3 m-2">
+                   <div class="col-span-2">
+                        @if ($errors->first('empresaA_id')) 
+                            <div wire:ignore class="px-4 py-2 border bg-slate-100">
+                                <select wire:model.defer="empresaA_id" wire:ignore class="block w-full p-2 text-xs text-red-900 border border-red-300 rounded bg-red-50 focus:ring-red-500 focus:border-red-500">
+                                    <option selected>{{__('Affiliate Company')}}</option>
+                                    @foreach ( $empresaA as $empresaAf )
+                                        <option value="{{$empresaAf->id}}">{{$empresaAf->nombre}}</option>
+                                    @endforeach 
+                                </select>
+                                <p class="mt-2 text-xs text-red-600">{{$errors->first('empresaA_id')}} </p>
+                            </div>
+                        @else
+                            <div  wire:ignore class="px-4 py-2 border bg-slate-100 h-12">
+                                <select wire:model.defer="empresaA_id" class="block w-full p-2 mb-6 text-xs text-gray-900 border border-gray-300  bg-gray-50 focus:ring-blue-500 focus:border-blue-500 h-8">
+                                    <option selected>{{__('Affiliate Company')}}</option>
+                                    @foreach ( $empresaA as $empresaAf )
+                                        <option value="{{$empresaAf->id}}">{{$empresaAf->nombre}}</option>
+                                    @endforeach 
+                                </select>
+                            </div>
+                        @endif 
+                   </div>
+                   <div class="col-span-1">
+                        @if ($errors->first('empresal_id')) 
+                            <div wire:ignore class="px-4 py-2 border bg-slate-100">
+                                <select wire:model.defer="empresal_id" wire:ignore class="block w-full p-2 text-xs text-red-900 border border-red-300 rounded bg-red-50 focus:ring-red-500 focus:border-red-500">
+                                    <option selected>{{__('Labor Company')}}</option>
+                                    @foreach ( $empresal as $empresale )
+                                        <option value="{{$empresale->id}}">{{$empresale->nombre}}</option>
+                                    @endforeach 
+                                </select>
+                                <p class="mt-2 text-xs text-red-600">{{$errors->first('empresal_id')}} </p>
+                            </div>
+                        @else
+                            <div  wire:ignore class="px-4 py-2 border bg-slate-100 h-12">
+                                <select wire:model.defer="empresal_id" class="block w-full p-2 mb-6 text-xs text-gray-900 border border-gray-300  bg-gray-50 focus:ring-blue-500 focus:border-blue-500 h-8">
+                                    <option selected>{{__('Labor Company')}}</option>
+                                    @foreach ( $empresal as $empresale )
+                                        <option value="{{$empresale->id}}">{{$empresale->nombre}}</option>
+                                    @endforeach 
+                                </select>
+                            </div>
+                        @endif 
+                    </div>
+                    <div class="py-2"> 
+                        <button  wire:click="OpenModal()" class="px-6 py-4 mr-2 h-6 text-xs font-serif text-center inline-flex items-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-blue-300" title="{{__('New Company')}}"><i class="fas fa-plus-circle fa-lg"></i></button>
+                    </div>  
             </div>
             <div class="flex justify-end border-x-0 mb-4">
                 <button wire:click.prevent="create()" class="px-6 py-1 mr-2 h-7 text-xs font-serif text-center inline-flex items-center text-white bg-blue-700 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300"><i class="fas fa-save fa-stack fa-lg"></i>{{__('Save')}} </button>
                 <button wire:click.prevent="closeModal()" class="px-6 py-1 mr-2 h-7 text-xs font-serif text-center inline-flex items-center text-white bg-slate-500 rounded-sm hover:bg-slate-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-slate-300"><i class="fas fa-window-close fa-stack fa-lg"></i>{{__('Cancel')}} </button>
-            </div> 
+            </div>
+            
+            <!-- Main modal -->
+            @if ($modal)  
+                                     <div class="relative z-20" aria-labelledby="dialog-title" role="dialog" aria-modal="true">
+                                        <div class="fixed inset-0  transition-opacity" aria-hidden="true"></div>
+                                            <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                    <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                                            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded dark:border-gray-600 border-gray-200">
+                                                                <h3 class="text-xl font-serif text-white dark:text-white bg-blue-400 px-2 py-1 text-shadow-2xs w-full">
+                                                                    {{__('New Labor Company')}}
+                                                                </h3>
+                                                            </div>
+                                                            <!-- Modal header -->
+                                                            <div class="grid gap-4 grid-cols-2 py-4 md:py-6">
+                                                                @if ($errors->first('nombreEmpresa'))
+                                                                    <div class="col-span-2">
+                                                                        <label for="nombreEmpresa" class="block text-xs font-medium text-heading text-red-900">{{__('Name')}}</label>
+                                                                        <input wire:model="nombreEmpresa" type="text" name="nombreEmpresa" id="nombreEmpresa" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-xs rounded focus:ring-red-500 focus:border-red-500 block w-full p-2.5 h-8" placeholder="{{__('Name Labor Company')}}" required="">
+                                                                        <p class="mt-2 text-xs text-red-600">{{$errors->first('nombreEmpresa')}} </p>                                                                    
+                                                                    </div>
+                                                                @else
+                                                                <div class="col-span-2">
+                                                                        <label for="name" class="block text-xs font-medium text-heading">{{__('Name')}}</label>
+                                                                        <input wire:model="nombreEmpresa" type="text" name="name" id="name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body h-8" placeholder="{{__('Name Labor Company')}}" required="">
+                                                                    </div>
+                                                                @endif
+                                                                @if ($errors->first('contactoEmpresa'))
+                                                                    <div class="col-span-2">
+                                                                        <label for="contactoEmpresa" class="block text-xs font-medium text-heading text-red-900">{{__('Contact')}}</label>
+                                                                        <input wire:model="contactoEmpresa" type="text" name="contactoEmpresa" id="contactoEmpresa" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-xs rounded focus:ring-red-500 focus:border-red-500 block w-full p-2.5 h-8" placeholder="{{__('Contact')}}" required="">
+                                                                        <p class="mt-2 text-xs text-red-600">{{$errors->first('contactoEmpresa')}} </p>                                                                    
+                                                                    </div>
+                                                                @else
+                                                                    <div class="col-span-2 sm:col-span-1">
+                                                                        <label for="contactoEmpresa" class="block text-xs font-medium text-heading">{{__('Contact')}}</label>
+                                                                        <input wire:model="contactoEmpresa" type="text" name="contactoEmpresa" id="contactoEmpresa" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body h-8" placeholder="{{__('Contact')}}" required="">
+                                                                    </div>
+                                                                @endif
+                                                                @if ($errors->first('celularEmpresa'))
+                                                                    <div class="col-span-2">
+                                                                        <label for="celularEmpresa" class="block text-xs font-medium text-heading text-red-900">{{__('Cell phone')}}</label>
+                                                                        <input wire:model="celularEmpresa" type="text" name="celularEmpresa" id="celularEmpresa" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-xs rounded focus:ring-red-500 focus:border-red-500 block w-full p-2.5 h-8" placeholder="{{__('Cell phone')}}" required="">
+                                                                        <p class="mt-2 text-xs text-red-600">{{$errors->first('celularEmpresa')}} </p>                                                                    
+                                                                    </div>
+                                                                @else
+                                                                    <div class="col-span-2 sm:col-span-1">
+                                                                        <label for="celularEmpresa" class="block text-xs font-medium text-heading">{{__('Cell phone')}}</label>
+                                                                        <input wire:model="celularEmpresa" type="text" name="celularEmpresa" id="celularEmpresa" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body h-8" placeholder="{{__('Cell phone')}}" required="">
+                                                                    </div>
+                                                                @endif
+                                                                @if ($errors->first('direccionEmpresa'))
+                                                                    <div class="col-span-2">
+                                                                        <label for="direccionEmpresa" class="block text-xs font-medium text-heading text-red-900">{{__('Address')}}</label>
+                                                                        <input wire:model="direccionEmpresa" type="text" name="direccionEmpresa" id="direccionEmpresa" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-xs rounded focus:ring-red-500 focus:border-red-500 block w-full p-2.5 h-8" placeholder="{{__('Address')}}" required="">
+                                                                        <p class="mt-2 text-xs text-red-600">{{$errors->first('direccionEmpresa')}} </p>
+                                                                    </div>
+                                                                @else
+                                                                   <div class="col-span-2 sm:col-span-1">
+                                                                        <label for="price" class="block text-xs font-medium text-heading">{{__('Address')}}</label>
+                                                                        <input wire:model="direccionEmpresa" type="text" name="price" id="price" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body h-8" placeholder="{{__('Address')}}" required="">
+                                                                    </div>
+                                                                @endif
+                                                                @if ($errors->first('emailEmpresa'))
+                                                                    <div class="col-span-2">
+                                                                        <label for="emailEmpresa" class="block text-xs font-medium text-heading text-red-900">{{__('Email')}}</label>
+                                                                        <input wire:model="emailEmpresa" type="text" name="emailEmpresa" id="emailEmpresa" class="bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-xs rounded focus:ring-red-500 focus:border-red-500 block w-full p-2.5 h-8" placeholder="{{__('Email')}}" required="">
+                                                                        <p class="mt-2 text-xs text-red-600">{{$errors->first('emailEmpresa')}} </p>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="col-span-2 sm:col-span-1">
+                                                                        <label for="category" class="block text-xs font-medium text-heading">{{__('Email')}}</label>
+                                                                        <input wire:model="emailEmpresa" type="text" name="price" id="price" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body h-8" placeholder="{{__('Email')}}" required="">
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                            <button wire:click.prevent="CrearEmpresa()" class="px-6 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300" title="Pagar Planiulla"><i class="fas fa-plus-square fa-lg"></i> &nbsp; {{__('Create')}} </button>
+                                                            <button wire:click.prevent="CloseModalEmpresa()" class="px-2 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-slate-500 rounded-sm hover:bg-slate-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-slate-300" title="Salir"><i class="fas fa-window-close fa-stack fa-lg"></i>{{__('Cancel')}} </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        
+                                        </div>
+                                    </div>  
+            @endif                   
+
         </x-card> 
         <script>
             $(document).ready(function() {

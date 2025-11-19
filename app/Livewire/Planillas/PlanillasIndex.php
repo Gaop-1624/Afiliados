@@ -20,23 +20,29 @@ class PlanillasIndex extends Component
     public $id, $Nplanilla, $Vpagado, $planilla;
     public $modal = false;
     public $selectedPlanillaId = null;
+    public $currentPlanilla = null;
 
     public function ClearFiels(){
         $this->reset(['Nplanilla', 'Vpagado']);
         $this->resetValidation();
     }
 
-    public function OpenModal($planillaId){
+    public function OpenModal($id){
             $this->ClearFiels();
-            $this->selectedPlanillaId = $planillaId;
+            $this->selectedPlanillaId = $id;
+            $this->currentPlanilla = Planillas::with('empresa')->find($id);
+          //  $this->Nplanilla= $this->currentPlanilla->nplanilla ?? null;
             $this->modal = true;
-        }
+    }
 
-        public function CloseModal(){
-            $this->ClearFiels();
+    public function CloseModal(){
+        
+            $this->selectedPlanillaId = null;
+            $this->currentPlanilla = null;
+           
             $this->modal = false;
-           // $this->redirectRoute('Planillas.Planillas');
-        }
+            $this->ClearFiels();
+    }
 
     
     public function ExpotPlanillasAportes($id){
@@ -47,17 +53,32 @@ class PlanillasIndex extends Component
         return Excel::download(new PlanillasSimple($id), 'PlanillaPagoSimple.xlsx');    
     }
 
-    public function PagarPlanilla(Planillas $id){
-            $planilla = Planillas::find($id)->first();
-           
-             DB::beginTransaction();
+    public function PagarPlanilla(){
+      // dd($planilla);
+        $planilla = Planillas::find($this->selectedPlanillaId);
 
-            try { 
+         if (! $this->selectedPlanillaId) {
+            LivewireAlert::title('Planilla no seleccionada')->error()->show();
+            return;
+        }
+
+        $this->validate([
+            'Nplanilla' => 'required|string',
+            'Vpagado'   => 'required|numeric',
+        ]);
+      
+        DB::beginTransaction();
+
+            try {  
+
+                DB::table('pagos')->where('nplanilla', '3')->update(['nplanilla' => $this->Nplanilla]);
+
                 $planilla->update([
                     'nplanilla' => $this->Nplanilla,
                     'total_pagado' => $this->Vpagado,
                     'status' => '1'
                 ]);
+
 
                 $user = User::find(Auth::user()->id);
                 $empresa = $user->empresa_id;
@@ -74,11 +95,12 @@ class PlanillasIndex extends Component
                     'fecha_ingreso' => now(),
                     'mes' => now()->month,
                     'tipo' => 1,
-                    'detalle' => "Pago de Planilla", $this->Nplanilla,
+                    'detalle' => "Pago de Planilla No :".$this->Nplanilla,
                     'entrada' => 0,
                     'salida' =>$this->Vpagado,
                     'total' => $total,
                     'empresa_id' => $empresa,
+                    'user_id' => Auth::user()->id,
                 ]); 
 
                 LivewireAlert::title('¡Planilla Pagada!')
@@ -87,7 +109,7 @@ class PlanillasIndex extends Component
 
                 $this->modal = false;
 
-            } catch (\Throwable $th) {
+             } catch (\Throwable $th) {
                 DB::rollBack();
                 LivewireAlert::title('¡Error al Pagar Planilla!')
                     ->Error()
@@ -95,34 +117,35 @@ class PlanillasIndex extends Component
                     ->show();
             }
 
-        DB::commit(); 
+        DB::commit();  
            
     }
 
     public function render()
     {
-      $planillas = Planillas::paginate(3);
-      
-     // $query = Planillas::query();
-
+        $query = Planillas::query();
+    
+      //  $planillas = Planillas::paginate(3);
         // Filtrar por usuario logueado
-        /* $query->where('user_id', Auth::id()); */
+      //  $query->where('user_id', Auth::id());
 
         // Filtro de búsqueda (si hay texto en $this->search)
-    /*     if (!empty($this->search)) {
+        /* if (!empty($this->search)) {
             $s = $this->search;
             $query->where(function($q) use ($s) {
                 $q->where('id', 'like', '%'.$s.'%')
-                  ->orWhere('codigo', 'like', '%'.$s.'%')
-                  ->orWhere('periodo', 'like', '%'.$s.'%');
+                  ->orWhere('nplanilla', 'like', '%'.$s.'%')
+                  ->orWhere('periodo_salud', 'like', '%'.$s.'%')
+                  ->orWhere('periodo_pension', 'like', '%'.$s.'%');
             });
         }
 
-        $planillas = $query->orderBy('id','DESC')->paginate(6); */
-
+        $planillas = $query->orderBy('id','DESC')->paginate(3); */
+        $planillas = Planillas::with('empresa')->latest()->paginate(10);
+      
         return view('livewire.planillas.planillas-index', [
-            'planillas' => $planillas,
-          
-        ]);
-    }
+                'planillas' => $planillas,
+            
+            ]);
+        }
 }

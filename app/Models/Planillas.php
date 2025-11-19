@@ -14,6 +14,8 @@ class Planillas extends Model
             'periodo_salud',
             'periodo_pension',
             'status',
+            'empresa_id',
+            'user_id'
     ];
 
     //Relacion muchos a muchos con la tabla afiliado

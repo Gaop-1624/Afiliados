@@ -11,6 +11,9 @@ class DetallePlanillas extends Model
     protected $fillable = [
             'planilla_id',
             'afiliado_id',
+            'pago_id',
+            'salario' ,
+            'total_pagado'
     ];
 
     //Relacion uno a muchos con la tabla afiliado

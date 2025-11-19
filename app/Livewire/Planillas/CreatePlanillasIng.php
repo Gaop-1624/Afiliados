@@ -17,13 +17,11 @@ class CreatePlanillasIng extends Component
     public $Pagos = [], $afiliado;
     public $totalCart=0, $total;
 
-       function ScanningCode(){
-       $Pagos = Pagos::where('nplanilla', 1)->get();
+    public function ScanningCode(){
+       $Pagos = Pagos::where('nplanilla', 2)->get();
 
        if ($Pagos) {
-            $Pagos = Pagos::where('nplanilla', 1)
-                  //  ->where('contrato_empresa', 3)
-                    ->get();
+            $Pagos = Pagos::where('nplanilla', 2)->get();
         
        } else {
             LivewireAlert::title('¡No Encontrado!')
@@ -38,17 +36,16 @@ class CreatePlanillasIng extends Component
     } 
 
      public function Create(){
-        $empresaId = 3;
+        
+        $empresaId = 2;
 
-        $planillas = Pagos::with('contrato')
-           ->where('nplanilla', 1)
-           ->whereHas('contrato', function($q) use ($empresaId) {
-               $q->where('empresa_id', $empresaId);
-           })
-           ->get();
+        $planillas = Pagos::with('contrato')->where('nplanilla', 2)->get();
 
-       // $planillas = Pagos::with('contrato')->where('nplanilla', 1)->get();
-       // $totalCart = Pagos::where('nplanilla', 1)->sum('total_pagado');
+        if ($planillas->isEmpty()) {
+            LivewireAlert::title('¡No hay pagos para procesar!')->info()->show();
+            return;
+        }
+    
         $totalCart = $planillas->sum('total_pagado');
 
         $periodo = Pagos::latest()->first();
@@ -60,55 +57,50 @@ class CreatePlanillasIng extends Component
         $periodopension = $ano."-".($mes -1);
      
               
-         DB::beginTransaction();
+          DB::beginTransaction();
 
-            try { 
-
-                if ($planillas->count()){
+            try {   
+                
                     $planilla = Planillas::Create([
                         'nplanilla' => 'Pendiente',
                         'total_pagado' => $totalCart,
                         'periodo_salud' => $periodosalud,
                         'periodo_pension' => $periodopension,
+                        'empresa_id' => $empresaId,
+                        'user_id' => Auth::id()
                     ]);
-   
+
+                    // recolectar ids de pagos
+                    $pagoIds = $planillas->pluck('id')->toArray();
+
                     $cont=0;
                     while($cont < count($planillas)){
                         DetallePlanillas::create([
                             'planilla_id' => $planilla->id,
                             'afiliado_id' => $planillas[$cont]->contrato->afiliado_id,
                         ]); 
-
-                        /* DB::table('pagos')->where('nplanilla', '1')->update([
-                            'nplanilla' => '2'
-                        ]); */
-
-                        $planillas[$cont]->nplanilla = '2';
-                        $planillas[$cont]->save();
-                     // $planillas->update(['nplanilla' => '2']);
-
-                    $cont++;
+                        $cont++;
                     }
 
+                    DB::table('pagos')->where('nplanilla', '2')->update(['nplanilla' => '3']);
+                    DB::commit();
+                    
                     LivewireAlert::title('¡Planilla Creada!')
-                    ->success()
-                    ->show();
+                        ->text('Se procesaron ' . count($pagoIds) . ' pagos')
+                        ->success()
+                        ->show();
 
                     $this->redirectRoute('Planillas.Planillas');
-                    
-                }else{
-                    LivewireAlert::title('¡No Existen Planillas!')
-                    ->success()
-                    ->show();
-                }
 
-             } catch (\Throwable $th) {
+              
+                    
+              } catch (\Throwable $th) {
                 DB::rollBack();
                 LivewireAlert::title('¡Error al Guardar la Planilla!')
                     ->Error()
                     ->timer(3000)
                     ->show();
-            }
+            }  
 
         DB::commit(); 
 
@@ -124,9 +116,9 @@ class CreatePlanillasIng extends Component
 
     public function render()
     {
-        $empresaId = 3; 
+        $empresaId = 2; 
         $Pagos = Pagos::with('contrato')
-           ->where('nplanilla', 1)
+           ->where('nplanilla', 2)
            ->where('user_id', Auth::id())
            ->whereHas('contrato', function($q) use ($empresaId) {
                $q->where('empresa_id', $empresaId);

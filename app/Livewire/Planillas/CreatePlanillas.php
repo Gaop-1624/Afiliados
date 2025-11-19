@@ -79,43 +79,31 @@ class CreatePlanillas extends Component
 
             try { 
 
-                if ($planillas->count()){
+            
                     $planilla = Planillas::Create([
                         'nplanilla' => 'Pendiente',
                         'total_pagado' => $totalCart,
                         'periodo_salud' => $periodosalud,
                         'periodo_pension' => $periodopension,
+                        'empresa_id' => '1'
                     ]);
    
-                    $cont=0;
-                    while($cont < count($planillas)){
+                    foreach($planillas as $pago){
                         DetallePlanillas::create([
                             'planilla_id' => $planilla->id,
-                            'afiliado_id' => $planillas[$cont]->contrato->afiliado_id,
-                        ]); 
-
-                        /* DB::table('pagos')->where('nplanilla', '1')->update([
-                            'nplanilla' => '2'
-                        ]); */
-
-                        $planillas[$cont]->nplanilla = '2';
-                        $planillas[$cont]->save();
-                     // $planillas->update(['nplanilla' => '2']);
-
-                    $cont++;
-                    }
+                            'afiliado_id' => $pago->contrato->afiliado_id,
+                            // 'pago_id' => $pago->id, // opcional si tu tabla detalle tiene referencia
+                        ]);
+}
+                     
+                    DB::table('pagos')->where('nplanilla', '1')->update(['nplanilla' => '2']);
 
                     LivewireAlert::title('¡Planilla Creada!')
                     ->success()
                     ->show();
 
                     $this->redirectRoute('Planillas.Planillas');
-                    
-                }else{
-                    LivewireAlert::title('¡No Existen Planillas!')
-                    ->success()
-                    ->show();
-                }
+         
 
              } catch (\Throwable $th) {
                 DB::rollBack();

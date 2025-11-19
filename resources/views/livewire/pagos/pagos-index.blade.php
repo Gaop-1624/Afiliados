@@ -45,28 +45,32 @@
     </x-card2>
         @if ($pagos->count())
                     @foreach ($pagos as $pago)
-                        <div id="toast-interactive" class="m-1 ml-4 justify-center inline-block mb-2 max-w-xs p-1 text-gray-500 bg-white rounded-lg shadow-2xl dark:bg-gray-800 dark:text-gray-400" role="alert">
-                            <div class="flex">
-                                <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-blue-500 bg-green-200 rounded dark:text-blue-300 dark:bg-blue-900">
-                                    <i class="far fa-money-bill-alt" style="color: rgb(166, 168, 166)"></i> &nbsp;
-                                </div>
-                                <div class="ms-1 m-2">
-                                    <span class="mb-1 text-xs font-bold text-gray-900 dark:text-white">{{$pago->contrato->afiliado->tdocumentos->alias}} {{$pago->contrato->afiliado->documento}} {{$pago->contrato->afiliado->pnombre}} {{$pago->contrato->afiliado->snombre}} {{$pago->contrato->afiliado->papellido}}</span>
-                                    <div class="mb-1 text-xs font-italic font-semibold text-blue-400  uppercase"> {{Carbon\Carbon::parse($pago->fecha_pago)->monthName}} &nbsp; Pagado: {{$pago->fecha_pago}} </div> 
-                                     <div class="mb-2"></div> 
-                                    <div class="grid grid-cols-3 gap-4">
-                                        <div class="col-span-2">
-                                            <button wire:click="ReciboPago({{$pago->id}})" type="button" class="cursor-pointer text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs px-5  text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-1" title="{{__('Print Receipt')}}"><i class="fas fa-file-invoice"></i> &nbsp; {{$pago->codigo}}</button>
-                                        </div> 
-                                        <div class="justify-end">
-                                            <a href="#" wire:click="delete({{$pago->id}})" class="inline-flex border px-1 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
-                                                <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
-                                            </a> 
-                                        </div>
-                                    </div>    
+                        <div class="items-start gap-1 inline-block  ml-4 mt-2">
+                        <div class="flex flex-col gap-1 border-1 border-gray-200 rounded-lg p-2 bg-white dark:bg-gray-800 dark:border-gray-700">
+                            <div class="leading-1.5 flex w-full max-w-[320px] flex-col bg-stone-50 shadow rounded-lg p-1">
+                                <div class="flex items-start bg-neutral-secondary-soft rounded-xl p-1">
+                                    <div class="me-1.5">
+                                        <span class="flex items-center gap-2 text-sm font-medium text-heading pb-2">
+                                            <span class="mb-1 px-4 text-xs font-bold text-white dark:text-white  bg-cyan-400"><i class="far fa-money-bill-alt" style="color: white"></i> &nbsp; {{$pago->contrato->afiliado->tdocumentos->alias}} {{$pago->contrato->afiliado->documento}} {{$pago->contrato->afiliado->pnombre}} {{$pago->contrato->afiliado->papellido}}</span>
+                                        </span>
+                                        <div class="mb-1 text-xs font-italic font-semibold text-blue-400  uppercase border-b-2"> {{Carbon\Carbon::parse($pago->fecha_pago)->monthName}} &nbsp; Pagado: {{$pago->fecha_pago}} </div> 
+                                            <span class="flex text-xs font-normal text-heading gap-2 justify-left pb-1 mb-1">
+                                            <div class="grid grid-cols-2 gap-2"> 
+                                                <div>   
+                                                    <button wire:click="ReciboPago({{$pago->id}})" type="button" class="cursor-pointer text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-sm text-xs px-5  text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-1" title="{{__('Print Receipt')}}"><i class="fas fa-file-invoice"></i> &nbsp; {{$pago->codigo}}</button>
+                                                </div>
+                                                <div class="flex justify-end">                                 
+                                                    <a href="#" wire:click="delete({{$pago->id}})" class="inline-flex border px-2 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
+                                                        <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                     @endforeach
         @else
             <div class="px-6 py-4 text-red-400 font-bold font-serif text-sm">

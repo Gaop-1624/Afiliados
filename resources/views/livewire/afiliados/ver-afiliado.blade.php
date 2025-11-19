@@ -62,7 +62,7 @@
                     <label for="small_outlined" class="absolute text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">{{__('Health (EPS)')}}</label>
                 </div>            
                 <div class="relative m-2">
-                    <input type="text" id="small_outlined" class="block px-2.5 pb-1.5 pt-3 w-full text-xs font-bold text-gray-900 bg-stone-100 rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value="{{ $ultimoContrato->claseArl }}  -   {{ $ultimoContrato->cajas->nombre }}" disabled/>
+                    <input type="text" id="small_outlined" class="block px-2.5 pb-1.5 pt-3 w-full text-xs font-bold text-gray-900 bg-stone-100 rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value="Riesgo:  {{ $ultimoContrato->claseArl }}  -  {{ $ultimoContrato->caja_id == "1" ? $ultimoContrato->cajas->nombre : "SIN CAJA"}}" disabled/>
                     <label for="small_outlined" class="absolute text-xs text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-3 scale-75 top-1 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-1 peer-focus:scale-75 peer-focus:-translate-y-3 start-1 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">{{__('Risks (ARL) and Cash')}}</label>
                 </div>              
                  <div class="relative m-2">
@@ -124,9 +124,10 @@
         <div class="px-4 py-2">
            {{$pagos->links()}}
         </div>   
-    </x-card>   
+    </x-card> 
+       {{--  <br>  
         <div class="flex justify-end border-x-0 mb-4">
-            <button wire:click.prevent="closeModal()" class="px-6 py-1 mr-2 h-7 text-xs font-serif text-center inline-flex items-center text-white bg-slate-500 rounded-lg hover:bg-slate-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-slate-300"><i class="fas fa-reply-all"></i> &nbsp; {{__('Go out')}} </button>
-        </div> 
+            <button wire:click.prevent="closeModal()" class="px-6 py-1 mr-2 h-7 text-xs font-serif text-center inline-flex items-center text-white bg-slate-500 rounded-sm hover:bg-slate-600 hover:text-white focus:ring-4 focus:outline-none focus:ring-slate-300"><i class="fas fa-reply-all"></i> &nbsp; {{__('Go out')}} </button>
+        </div>  --}}
    
 </div>

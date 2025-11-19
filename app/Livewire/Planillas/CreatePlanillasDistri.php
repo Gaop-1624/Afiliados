@@ -18,12 +18,10 @@ class CreatePlanillasDistri extends Component
     public $totalCart=0, $total;
 
        function ScanningCode(){
-       $Pagos = Pagos::where('nplanilla', 1)->get();
+       $Pagos = Pagos::where('nplanilla', 3)->get();
 
        if ($Pagos) {
-            $Pagos = Pagos::where('nplanilla', 1)
-                  //  ->where('contrato_empresa', 3)
-                    ->get();
+            $Pagos = Pagos::where('nplanilla', 3)->get();
         
        } else {
             LivewireAlert::title('¡No Encontrado!')
@@ -38,14 +36,20 @@ class CreatePlanillasDistri extends Component
     } 
 
      public function Create(){
-        $empresaId = 2;
+        $empresaId = 3;
 
-        $planillas = Pagos::with('contrato')
+        $planillas = Pagos::with('contrato')->where('nplanilla', $empresaId)->get();
+
+        if ($planillas->isEmpty()) {
+            LivewireAlert::title('¡No hay pagos para procesar!')->info()->show();
+            return;
+        }
+       /*  $planillas = Pagos::with('contrato')
            ->where('nplanilla', 1)
            ->whereHas('contrato', function($q) use ($empresaId) {
                $q->where('empresa_id', $empresaId);
            })
-           ->get();
+           ->get(); */
 
        // $planillas = Pagos::with('contrato')->where('nplanilla', 1)->get();
        // $totalCart = Pagos::where('nplanilla', 1)->sum('total_pagado');
@@ -64,47 +68,57 @@ class CreatePlanillasDistri extends Component
 
             try { 
 
-                if ($planillas->count()){
+               
                     $planilla = Planillas::Create([
                         'nplanilla' => 'Pendiente',
                         'total_pagado' => $totalCart,
                         'periodo_salud' => $periodosalud,
                         'periodo_pension' => $periodopension,
+                        'empresa_id' => $empresaId,
+                        'user_id' => Auth::id()
                     ]);
-   
+
+                    // recolectar ids de pagos
+                    $pagoIds = $planillas->pluck('id')->toArray();
+
                     $cont=0;
                     while($cont < count($planillas)){
                         DetallePlanillas::create([
                             'planilla_id' => $planilla->id,
                             'afiliado_id' => $planillas[$cont]->contrato->afiliado_id,
+                            'pago_id' => $planilla->id,
+                            'salario' => $planilla->salario ?? 0,
+                            'total_pagado' => $planilla->total_pagado ?? 0,
                         ]); 
-
-                        /* DB::table('pagos')->where('nplanilla', '1')->update([
-                            'nplanilla' => '2'
-                        ]); */
-
-                        $planillas[$cont]->nplanilla = '2';
-                        $planillas[$cont]->save();
-                     // $planillas->update(['nplanilla' => '2']);
-
-                    $cont++;
+                        $cont++;
                     }
+   
+                                    
+                    DB::table('pagos')->where('nplanilla', '4')->update(['nplanilla' => $empresaId]);
 
-                    LivewireAlert::title('¡Planilla Creada!')
-                    ->success()
-                    ->show();
+                    /* foreach($planillas as $pago){
+                        DetallePlanillas::create([
+                            'planilla_id' => $planilla->id,
+                            'afiliado_id' => $pago->contrato->afiliado_id,
+                            // 'pago_id' => $pago->id, // opcional si tu tabla detalle tiene referencia
+                        ]);
+}
+                     
+                    DB::table('pagos')->where('nplanilla', '1')->update(['nplanilla' => '2']); */
+   
+                     LivewireAlert::title('¡Planilla Creada!')
+                        ->text('Se procesaron ' . count($pagoIds) . ' pagos')
+                        ->success()
+                        ->timer(3000)
+                        ->show();
 
                     $this->redirectRoute('Planillas.Planillas');
                     
-                }else{
-                    LivewireAlert::title('¡No Existen Planillas!')
-                    ->success()
-                    ->show();
-                }
+             
 
              } catch (\Throwable $th) {
                 DB::rollBack();
-                LivewireAlert::title('¡Error al Guardar la Planilla!')
+                 LivewireAlert::title('¡Error al Guardar la Planilla!')
                     ->Error()
                     ->timer(3000)
                     ->show();
@@ -124,14 +138,14 @@ class CreatePlanillasDistri extends Component
 
     public function render()
     {
-        $empresaId = 2; 
+        $empresaId = 3; 
         $Pagos = Pagos::with('contrato')
-           ->where('nplanilla', 1)
+           ->where('nplanilla', 3)
            ->where('user_id', Auth::id())
            ->whereHas('contrato', function($q) use ($empresaId) {
                $q->where('empresa_id', $empresaId);
-           })
-           ->get();
+           })->get();
+
         $totales = $Pagos->sum('total_pagado');
 
         return view('livewire.planillas.create-planillas-distri',[

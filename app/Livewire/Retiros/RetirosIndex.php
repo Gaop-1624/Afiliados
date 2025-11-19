@@ -109,7 +109,7 @@ class RetirosIndex extends Component
                 'periodo' => $periodo,
                 'user_id' => $user,
                 'dias' => $this->diasretiro,
-                'nplanilla' => 1,
+                'nplanilla' => 2,
                 'novedad' => "Retiro"
             ]); 
            

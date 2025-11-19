@@ -27,6 +27,48 @@ class CreateAfiliado extends Component
     public $TDocumentos, $Ciudades, $ciudad_id, $celular, $fecha_nac, $genero, $Eps, $Arl, $Afps, $caja_id;
     public $eps_id, $arl_id, $afp_id, $riesgo, $empresal, $empresal_id, $salario, $VAfiliacion, $afiliadoid;
     public $sexo, $claseArl, $empresa_id, $empresaA, $empresaA_id;
+    public $modal = false;
+    public $contacto, $nombreEmpresa, $celularEmpresa, $direccionEmpresa, $emailEmpresa, $contactoEmpresa;
+
+    public function limpiarModal(){
+        $this->resetValidation();
+        $this->reset(['nombreEmpresa','contacto', 'celularEmpresa', 'direccionEmpresa', 'emailEmpresa', 'contactoEmpresa']);
+    }
+
+     public function OpenModal(){
+           $this->limpiarModal();
+            $this->modal = true;
+        }
+
+    public function CloseModalEmpresa(){
+            $this->limpiarModal();
+            $this->modal = false;
+    }
+
+    public function CrearEmpresa(){
+
+         $this->validate([
+            'nombreEmpresa' => 'required|string',
+            'contactoEmpresa' => 'required|string',
+            'celularEmpresa' => 'required|numeric',
+            'direccionEmpresa' => 'required|string',
+            'emailEmpresa' => 'required|email',
+        ]); 
+
+        EmpresaLaboral::create([
+            'nombre' => $this->nombreEmpresa,
+            'contacto' => $this->contactoEmpresa,
+            'celular' => $this->celularEmpresa,
+            'direccion' => $this->direccionEmpresa,
+            'email' => $this->emailEmpresa,
+        ]);
+
+        LivewireAlert::title('¡Empresa Laboral Creada!')
+        ->success()
+        ->show();
+
+        $this->CloseModalEmpresa();
+    }
 
     public function closeModal(){
         $this->resetValidation();
@@ -213,7 +255,7 @@ class CreateAfiliado extends Component
                         'dias' => $dias,
                         'contrato_id' => $contrato->id,
                         'salario' => $this->salario,
-                        'nplanilla' => 'Afiliación'
+                        'nplanilla' => 'Ingreso Afiliacion',
                     ]); 
 
                     $user = User::find(Auth::user()->id);

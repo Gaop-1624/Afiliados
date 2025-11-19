@@ -214,5 +214,13 @@ class EpsSeeder extends Seeder
         $eps26->tarifaeps = "0.04";
         $eps26->save();
 
+        $eps27 = new Ep();
+        $eps27->t_documento_id  = "3";
+        $eps27->nit =  "814000337";
+        $eps27->codigo = "ESSC18";
+        $eps27->nombre = "EMSSANAR";
+        $eps27->tarifaeps = "0.04";
+        $eps27 ->save();
+
     }
 }
