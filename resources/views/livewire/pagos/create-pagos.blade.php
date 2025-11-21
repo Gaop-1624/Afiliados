@@ -149,7 +149,9 @@
                         <div class="bg-blue-400 text-white text-center py-1 m-2 font-bold font-serif mb-3"></div>
                         <div class="text-xl font-bold text-center m-2 border-2 shadow-2xl mb-2">
                             <input type="text" wire:model="total" id="disabled-input-2" aria-label="disabled input 2" class="m-4 bg-gray-100 border-gray-300 text-gray-900 text-xl text-center rounded focus:ring-blue-500 focus:border-blue-500 block w-64 p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 h-8" value="$" disabled readonly>
-                            <button wire:click.prevent="Create()" class="px-22 py-1 m-2 mr-2 h-8 w-4/5 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300"><i class="far fa-money-bill-alt"></i> &nbsp; {{__('Pay')}} </button>
+                            @can('admin.pagos.create')
+                                <button wire:click.prevent="Create()" class="px-22 py-1 m-2 mr-2 h-8 w-4/5 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300"><i class="far fa-money-bill-alt"></i> &nbsp; {{__('Pay')}} </button>
+                            @endcan
                         </div>
                     </div>
            </x-card>

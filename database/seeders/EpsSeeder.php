@@ -121,7 +121,7 @@ class EpsSeeder extends Seeder
         $eps16->t_documento_id  = "3";
         $eps16->nit =  "8001409496";
         $eps16->codigo = "EPSC03";
-        $eps16->nombre = "Cafesalud Entidad  Promotora de Salud S.A";
+        $eps16->nombre = "Cafesalud S.A";
         $eps16->tarifaeps = "0.04";
         $eps16 ->save();
 
@@ -184,7 +184,7 @@ class EpsSeeder extends Seeder
         $eps23->t_documento_id  = "3";
         $eps23->nit =  "839000495";
         $eps23->codigo = "EPSIC4";
-        $eps23->nombre = "Entidad Promotora de Salud Anas Wayuu EPSI";
+        $eps23->nombre = "Anas Wayuu EPSI";
         $eps23->tarifaeps = "0.04";
         $eps23->save();
 

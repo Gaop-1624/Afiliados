@@ -12,48 +12,81 @@
             </a>
 
             <flux:navlist variant="outline">
-                <flux:navlist.item  icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"> Dashboard </flux:navlist.item>
-                <flux:navlist.group heading="{{__('Configuration')}}" expandable :expanded="false">
-                    <flux:navlist.item href="{{route('Empresa.Index')}}" :current="request()->routeIs('Empresa.Index')" wire:navigate><i class="far fa-building"></i> &nbsp; {{__('Company')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Admin.Users')}}" :current="request()->routeIs('Admin.Users')" wire:navigate><i class="fas fa-users"></i> &nbsp; {{__('Users')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Admin.Roles')}}" :current="request()->routeIs('Admin.Roles')" wire:navigate><i class="fab fa-critical-role"></i> &nbsp; {{__('Roles and Permissions')}}</flux:navlist.item>
-                </flux:navlist.group>
-
-                 <flux:navlist.group  heading="{{__('Affiliations')}}" expandable :expanded="false">
-                    <flux:navlist.item href="{{route('Afiliados')}}" :current="request()->routeIs('Afiliados')" wire:navigate><i class="fab fa-affiliatetheme" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('affiliates')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Eps.Eps')}}" :current="request()->routeIs('Eps.Eps')" wire:navigate><i class="fas fa-procedures"></i> &nbsp; {{__('Salud (EPS)')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Arls.Arls')}}" :current="request()->routeIs('Arls.Arls')" wire:navigate><i class="fab fa-asymmetrik"></i> &nbsp; {{__('Riesgos (ARL)')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Afps.Afps')}}" :current="request()->routeIs('Afps.Afps')" wire:navigate><i class="fas fa-poll"></i> &nbsp; {{__('Pensiones (AFP)')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Cajas.Cajas')}}" :current="request()->routeIs('Cajas.Cajas')" wire:navigate><i class="fas fa-archive"></i> &nbsp; {{__('Compensación (CAJA)')}}</flux:navlist.item>
-                </flux:navlist.group>
-
-                 <flux:navlist.group  heading="{{__('Payments')}}" expandable :expanded="false">
-                    <flux:navlist.item href="{{route('Pagos.Pagos')}}" :current="request()->routeIs('Pagos.Pagos')" wire:navigate><i class="far fa-money-bill-alt" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Pay')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Retiros.Retiros')}}" :current="request()->routeIs('Retiros.Retiros')" wire:navigate><i class="far fa-times-circle"></i> &nbsp; {{__('Activate Withdrawal')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Actualizar.Salario')}}" :current="request()->routeIs('Actualizar.Salario')" wire:navigate><i class="fas fa-hand-holding-usd"></i> &nbsp; {{__('Update salary')}}</flux:navlist.item>
-                </flux:navlist.group>
-
-                 <flux:navlist.group  heading="{{__('Worksheets')}}" expandable :expanded="false">
-                    <flux:navlist.item href="{{route('Planillas.Planillas')}}" :current="request()->routeIs('Planillas.Planillas')" wire:navigate><i class="fas fa-file-medical-alt" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('trigger')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Planillas.Create.Index')}}" :current="request()->routeIs('Planillas.Create.Index')" wire:navigate><i class="fab fa-r-project"></i> &nbsp; {{__('Generate Withdrawals')}}</flux:navlist.item>
-                   {{--  <flux:navlist.item href="{{route('Arls.Arls')}}" :current="request()->routeIs('Arls.Arls')" wire:navigate><i class="fas fa-hand-holding-usd"></i> &nbsp; {{__('Update salary')}}</flux:navlist.item>
- --}}                </flux:navlist.group>
-
-                <flux:navlist.group  heading="{{__('Movements')}}" expandable :expanded="false">
-                    <flux:navlist.item href="{{route('Movimiento.IngresosEgresos')}}" :current="request()->routeIs('Movimiento.IngresosEgresos')" wire:navigate><i class="fas fa-file-invoice-dollar"></i> &nbsp; {{__('Income and Expenses')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Movimiento.CirerreDiario')}}" :current="request()->routeIs('Movimiento.CirerreDiario')" wire:navigate><i class="fas fa-cloud-sun" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Daily Closing')}}</flux:navlist.item>
-                    <flux:navlist.item href="{{route('Movimiento.IngresosEgresosIndex')}}" :current="request()->routeIs('Movimiento.IngresosEgresosIndex')" wire:navigate><i class="fas fa-language"></i> &nbsp; {{__('Closing month')}}</flux:navlist.item>
-{{--                     <flux:navlist.item href="{{route('Movimiento.CirerreAño')}}" :current="request()->routeIs('Movimiento.CirerreAño')" wire:navigate><i class="fas fa-vote-yea" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Annual Closing')}}</flux:navlist.item>
- --}}                
-                    <flux:navlist.item href="{{route('Movimiento.CirerreAño')}}" :current="request()->routeIs('Movimiento.CirerreAño')" wire:navigate><i class="fas fa-vote-yea" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Annual Closing')}}</flux:navlist.item>
-                </flux:navlist.group>
-  
-
-
-
+                    <flux:navlist.item  icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')"> Dashboard </flux:navlist.item>
+                    @can('admin.config.menu') 
+                        <flux:navlist.group heading="{{__('Configuration')}}" expandable :expanded="false">
+                            @can('admin.empresa.index')
+                                <flux:navlist.item href="{{route('Empresa.Index')}}" :current="request()->routeIs('Empresa.Index')" wire:navigate><i class="far fa-building"></i> &nbsp; {{__('Company')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.users.index')
+                                <flux:navlist.item href="{{route('Admin.Users')}}" :current="request()->routeIs('Admin.Users')" wire:navigate><i class="fas fa-users"></i> &nbsp; {{__('Users')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.roles.index')
+                                <flux:navlist.item href="{{route('Admin.Roles')}}" :current="request()->routeIs('Admin.Roles')" wire:navigate><i class="fab fa-critical-role"></i> &nbsp; {{__('Roles and Permissions')}}</flux:navlist.item>
+                            @endcan
+                        </flux:navlist.group>
+                    @endcan 
+                    @can('admin.afiliaciones.menu')
+                        <flux:navlist.group  heading="{{__('Affiliations')}}" expandable :expanded="false">
+                            @can('admin.afiliados.index')    
+                                <flux:navlist.item href="{{route('Afiliados')}}" :current="request()->routeIs('Afiliados')" wire:navigate><i class="fab fa-affiliatetheme" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('affiliates')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.eps.index')
+                                <flux:navlist.item href="{{route('Eps.Eps')}}" :current="request()->routeIs('Eps.Eps')" wire:navigate><i class="fas fa-procedures"></i> &nbsp; {{__('Salud (EPS)')}}</flux:navlist.item>
+                            @endcan
+                                @can('admin.arl.index')
+                            <flux:navlist.item href="{{route('Arls.Arls')}}" :current="request()->routeIs('Arls.Arls')" wire:navigate><i class="fab fa-asymmetrik"></i> &nbsp; {{__('Riesgos (ARL)')}}</flux:navlist.item>
+                            @endcan
+                                @can('admin.afp.index')
+                            <flux:navlist.item href="{{route('Afps.Afps')}}" :current="request()->routeIs('Afps.Afps')" wire:navigate><i class="fas fa-poll"></i> &nbsp; {{__('Pensiones (AFP)')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.caja.index')
+                                <flux:navlist.item href="{{route('Cajas.Cajas')}}" :current="request()->routeIs('Cajas.Cajas')" wire:navigate><i class="fas fa-archive"></i> &nbsp; {{__('Compensación (CAJA)')}}</flux:navlist.item>
+                            @endcan
+                        </flux:navlist.group>
+                    @endcan 
+                    @can('admin.pagos.menu')
+                        <flux:navlist.group  heading="{{__('Payments')}}" expandable :expanded="false">
+                            @can('admin.pagos.index')   
+                                <flux:navlist.item href="{{route('Pagos.Pagos')}}" :current="request()->routeIs('Pagos.Pagos')" wire:navigate><i class="far fa-money-bill-alt" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Pay')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.retiros.index')   
+                                <flux:navlist.item href="{{route('Retiros.Retiros')}}" :current="request()->routeIs('Retiros.Retiros')" wire:navigate><i class="far fa-times-circle"></i> &nbsp; {{__('Activate Withdrawal')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.salario.index')   
+                                <flux:navlist.item href="{{route('Actualizar.Salario')}}" :current="request()->routeIs('Actualizar.Salario')" wire:navigate><i class="fas fa-hand-holding-usd"></i> &nbsp; {{__('Update salary')}}</flux:navlist.item>
+                            @endcan
+                        </flux:navlist.group>
+                    @endcan 
+                    @can('admin.planillas.menu')
+                        <flux:navlist.group  heading="{{__('Worksheets')}}" expandable :expanded="false">
+                            @can('admin.planillas.index')
+                                <flux:navlist.item href="{{route('Planillas.Planillas')}}" :current="request()->routeIs('Planillas.Planillas')" wire:navigate><i class="fas fa-file-medical-alt" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('trigger')}}</flux:navlist.item>
+                            @endcan
+                            @can('admin.planillas.create')
+                                <flux:navlist.item href="{{route('Planillas.Create.Index')}}" :current="request()->routeIs('Planillas.Create.Index')" wire:navigate><i class="fab fa-r-project"></i> &nbsp; {{__('Generate Withdrawals')}}</flux:navlist.item>
+                            @endcan
+                        </flux:navlist.group>
+                    @endcan 
+                    @can('admin.reportes.menu')
+                        <flux:navlist.group  heading="{{__('Movements')}}" expandable :expanded="false">
+                                @can('admin.reportes.index')
+                                    <flux:navlist.item  href="{{route('Movimiento.IngresosEgresos')}}" :current="request()->routeIs('Movimiento.IngresosEgresos')" wire:navigate><i class="fas fa-file-invoice-dollar"></i> &nbsp; {{__('Income and Expenses')}}</flux:navlist.item>
+                                @endcan
+                                @can('admin.reportesdia.index')
+                                    <flux:navlist.item href="{{route('Movimiento.CirerreDiario')}}" :current="request()->routeIs('Movimiento.CirerreDiario')" wire:navigate><i class="fas fa-cloud-sun" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Daily Closing')}}</flux:navlist.item>
+                                @endcan
+                                @can('admin.reportesmes.index')
+                                    <flux:navlist.item href="{{route('Movimiento.IngresosEgresosIndex')}}" :current="request()->routeIs('Movimiento.IngresosEgresosIndex')" wire:navigate><i class="fas fa-language"></i> &nbsp; {{__('Closing month')}}</flux:navlist.item>
+                                @endcan
+                                @can('admin.reportesano.index')
+                                    <flux:navlist.item href="{{route('Movimiento.CirerreAño')}}" :current="request()->routeIs('Movimiento.CirerreAño')" wire:navigate><i class="fas fa-vote-yea" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('Annual Closing')}}</flux:navlist.item>
+                                @endcan
+                        </flux:navlist.group>
+                    @endcan
             </flux:navlist>
         
-            <flux:spacer />
+            <flux:spacer/>
 
             <!-- Desktop User Menu -->
             <flux:dropdown position="bottom" align="start">

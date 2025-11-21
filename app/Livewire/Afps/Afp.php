@@ -27,7 +27,7 @@ class Afp extends Component
                 ->orWhere('codigo', 'like', '%'.$this->search. '%') 
                 ->orWhere('nombre', 'like', '%'.$this->search. '%') 
                 ->orderBy('id','DESC')
-                ->paginate(6);
+                ->paginate(3);
 
         return view('livewire.afps.afp', [
             'afpss' => $Afps

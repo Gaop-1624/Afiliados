@@ -36,51 +36,54 @@
                             </a> 
                         </div>
                         <div class="flex justify-end px-1 py-4 mr-4"> 
-                            <a href="{{ route('Admin.Users.Create') }}" class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('New User')}}" >
-                                <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
-                            </a>
+                            @can('admin.users.create')
+                                <a href="{{ route('Admin.Users.Create') }}" class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('New User')}}" >
+                                    <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
+                                </a>
+                            @endcan    
                         </div>
                 </div>
             </form> 
     </x-card2>
         @if ($users->count())
-                    @foreach ($users as $user)
-                        <div id="toast-interactive" class="ml-8 justify-center inline-block mb-4 max-w-xs p-1 text-gray-500 bg-white rounded-lg shadow-2xl dark:bg-gray-800 dark:text-gray-400" role="alert">
-                            <div class="flex">
-                                <div class="inline-flex items-center justify-center shrink-0 w-8 h-8 text-blue-500 bg-green-200 rounded dark:text-blue-300 dark:bg-blue-900">
-                                    <i class="fas fa-user-tie" style="color: rgb(16, 16, 18);"></i>
-                                </div>
-                                <div class="ms-1">
-                                    <span class="mb-1 text-xs font-bold text-gray-900 dark:text-white">{{$user->name}}</span>
-                                    <div class="mb-1 text-xs font-italic text-blue-600">{{$user->email}}</div> 
-                                     <div class="mb-2">
+                @foreach ($users as $user)            
+                    <div class="items-start gap-1 inline-block  ml-14 mt-2">
+                        <div class="flex flex-col gap-1 border-1 border-gray-200 rounded-lg p-2 bg-white dark:bg-gray-800 dark:border-gray-700">
+                            <div class="leading-1.5 flex w-full max-w-[320px] flex-col bg-stone-50 shadow rounded-lg p-1">
+                                <div class="flex items-start bg-neutral-secondary-soft rounded-xl p-1">
+                                    <div class="me-1.5">
+                                    <span class="flex items-center gap-2 text-sm font-medium text-heading pb-2">
+                                        <span class="mb-1 px-4 text-sm font-bold text-white dark:text-white  bg-cyan-400"><i class="fas fa-user-tie" style="color: white"></i> &nbsp; {{$user->name}}</span>
+                                    </span>
+                                    <div class="mb-2">
                                         @if (!empty($user->getRoleNames()))
                                             @foreach ($user->getRoleNames() as $rolName)
-                                                <h5 class="text-sm text-white font-semibold text-center bg-cyan-500 border rounded-sm shadow-2xl">Perfil: {{$rolName}}</h5>
+                                                <h5 class="text-left text-xs text-stone-400 font-semibold border-b-2 rounded-sm shadow-2xl">{{$rolName}}</h5>
                                             @endforeach
                                         @endif  
                                     </div> 
-                                    <div class="grid grid-cols-3 gap-4">
-                                        <div class="col-span-2">
-                                            @if ($user->isSuspended())
-                                                <button wire:click="suspend({{ $user->id}})" type="button" class="cursor-pointer text-white bg-red-600 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-semibold rounded-sm text-xs px-4  text-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 py-1"><i class="fas fa-times-circle"></i> &nbsp; {{__('Idle')}}</button>
-                                            @else
-                                                <button wire:click="suspend({{ $user->id}})" type="button" class="cursor-pointer text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-xs px-5  text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-1"><i class="fas fa-check-circle fa-fw"></i> &nbsp; {{__('Asset')}}</button>
-                                            @endif 
-                                        </div> 
-                                        <div>
+                                       @if ($user->isSuspended())
+                                           <button wire:click="suspend({{ $user->id}})" type="button" class="cursor-pointer text-white bg-red-600 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-semibold rounded-xs text-xs px-4  text-center me-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 py-1"><i class="fas fa-times-circle"></i> &nbsp; {{__('Idle')}}</button>
+                                       @else
+                                           <button wire:click="suspend({{ $user->id}})" type="button" class="cursor-pointer text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-xs text-xs px-5  text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-1"><i class="fas fa-check-circle fa-fw"></i> &nbsp; {{__('Asset')}}</button>
+                                        @endif 
+                                         @can('admin.users.edit')
                                             <a href="#" wire:click="update({{$user->id}})" class="inline-flex border px-1 py-1 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-100 dark:bg-blue-200 dark:hover:bg-blue-400 dark:focus:ring-blue-600" title="{{__('Edit')}}">
                                                 <i class="far fa-edit fa-fw fa-xl" style="color: blue;"></i>
-                                            </a>                                    
+                                            </a> 
+                                         @endcan
+                                         @can('admin.users.delete') 
                                             <a href="#" wire:click="delete({{$user->id}})" class="inline-flex border px-1 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
                                                 <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
                                             </a>
-                                        </div>
-                                    </div>    
+                                         @endcan
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach    
+            
         @else
             <div class="px-6 py-4 text-red-400 font-bold font-serif text-sm">
                 {{__('There are no records')}} .....

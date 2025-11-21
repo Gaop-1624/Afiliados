@@ -38,10 +38,12 @@
                                 <i class="fas fa-file-upload fa-2x"></i>
                             </a> 
                         </div>
-                        <div class="flex justify-end px-1 py-4 mr-4"> 
-                            <a href="{{ route('Afiliados.Create') }}" wire.navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('New Affiliates')}}" >
-                                <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
-                            </a>
+                        <div class="flex justify-end px-1 py-4 mr-4">
+                            @can('admin.afiliados.create')  
+                                <a href="{{ route('Afiliados.Create') }}" wire.navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('New Affiliates')}}" >
+                                    <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
+                                </a>
+                            @endcan
                         </div>
                 </div>
             </form> 
@@ -108,13 +110,17 @@
                                             @endif 
                                             <a href="#" wire:click="view({{$afiliado->id}})" class="inline-flex border px-1 py-1 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-100 dark:bg-blue-200 dark:hover:bg-green-400 dark:focus:ring-green-600" title="{{__('View')}}">
                                                 <i class="fas fa-eye" style="color: rgb(93, 231, 208);"></i>
-                                            </a> 
-                                            <a href="#" wire:click="update({{$afiliado->id}})" class="inline-flex border px-1 py-1 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-100 dark:bg-blue-200 dark:hover:bg-blue-400 dark:focus:ring-blue-600" title="{{__('Edit')}}">
-                                                <i class="far fa-edit fa-fw fa-xl" style="color: blue;"></i>
-                                            </a>  
-                                            <a href="#" wire:click="delete({{$afiliado->id}})" class="inline-flex border px-1 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
-                                                <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
                                             </a>
+                                            @can('admin.afiliados.edict') 
+                                                <a href="#" wire:click="update({{$afiliado->id}})" class="inline-flex border px-1 py-1 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-100 dark:bg-blue-200 dark:hover:bg-blue-400 dark:focus:ring-blue-600" title="{{__('Edit')}}">
+                                                    <i class="far fa-edit fa-fw fa-xl" style="color: blue;"></i>
+                                                </a>
+                                            @endcan
+                                            @can('admin.afiliados.delete')  
+                                                <a href="#" wire:click="delete({{$afiliado->id}})" class="inline-flex border px-1 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
+                                                    <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
+                                                </a>
+                                            @endcan    
                                         </span>
                                     </div>
                                 </div>

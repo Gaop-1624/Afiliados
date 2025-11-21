@@ -34,21 +34,23 @@
                           <i class="fas fa-file-csv fa-2x" style="color: #615dec"></i>
                       </a> 
                 </div>
-                <div class="flex justify-end px-1 py-4 mr-4"> 
+                <div class="flex justify-end px-1 py-4 mr-4">
+                    @can('admin.planillas.create') 
                       <a href="{{ route('Planillas.Generar') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
                              <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
                       </a>
+                    @endcan
                 </div>
         </div>
     </x-card2>
     @if ($planillas->count())
         @foreach ($planillas as $planilla)  
-            <div class="inline-block items-start gap-2.5 m-1 mb-4">
+            <div class="inline-block items-start gap-2.5 m-1 mb-4 ml-8">
                 <div class="flex flex-col gap-1">
                         <div class="flex flex-col w-full max-w-[320px] leading-1.5 p-2 border-gray-200 bg-gray-100 rounded-e-xl rounded-es-xl dark:bg-gray-700">
                         <div class="flex items-start bg-gray-50 dark:bg-gray-600 rounded-xl ">
                         <div class="me-2">
-                            <span class="px-2 text-xs font-bold text-white dark:text-white  bg-cyan-400 shadow-2xs"><i class="fas fa-file-medical-alt" style="color: white"></i> &nbsp; {{$planilla->empresa->nombre}} </span>
+                            <span class="px-2 text-xs font-bold text-white dark:text-white  bg-cyan-400 shadow-2xs w-full"><i class="fas fa-file-medical-alt" style="color: white"></i> &nbsp; {{$planilla->empresa->nombre}} </span>
                             <span class="flex items-center gap-2 text-sm font-medium text-gray-900 dark:text-white pb-2">
                                 <svg fill="none" aria-hidden="true" class="w-5 h-5 shrink-0" viewBox="0 0 20 21">
                                     <g clip-path="url(#clip0_3173_1381)">
@@ -65,7 +67,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                                <p class="text-xs">{{__('Form Number')}}:</p><b>{{$planilla->nplanilla}}</b>
+                                <p class="text-xs mb-4">{{__('Form Number')}}:</p><b>{{$planilla->nplanilla}}</b>
                                 @if ($planilla->status == 0)
                                     <button  class="block text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-xs px-4 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" title="Pagar Planilla"
                                         wire:click="OpenModal({{ $planilla->id }})"> 
@@ -78,19 +80,7 @@
                                 @endif
                              {{--   ==================== --}} 
                             </span>
-                            <span class="flex text-xs font-normal text-gray-500 dark:text-gray-400 gap-2">
-                                {{$planilla->periodo_pension}} 
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
-                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
-                                </svg>
-                                {{$planilla->periodo_salud}}
-                                <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="self-center" width="3" height="4" viewBox="0 0 3 4" fill="none">
-                                    <circle cx="1.5" cy="2" r="1.5" fill="#6B7280"/>
-                                </svg>
-                                ${{number_format($planilla->total_pagado)}}
-                            </span>
-                        </div>
-                            <div class="self-center items-center">
+                       
                                 @if ($planilla->status == 0)
                                     <button wire:click.prevent="ExpotPlanillasAportes({{$planilla->id}})" class="cursor-pointer inline-flex self-center items-center p-2 text-sm font-medium text-center text-gray-900 bg-gray-50 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600" type="button" title="{{__('Download Contribution Form Online')}}">
                                         <svg class="w-4 h-4 text-green-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -104,7 +94,6 @@
                                             <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
                                         </svg> 
                                     </button>
-                          
                                 @endif
                             </div>
                         </div>
@@ -113,7 +102,7 @@
             </div>
         @endforeach
          <!-- Main modal -->
-                                @if ($modal)  
+         @if ($modal)  
                                     <div class="relative z-20" aria-labelledby="dialog-title" role="dialog" aria-modal="true">
                                         <div class="fixed inset-0  transition-opacity" aria-hidden="true"></div>
                                             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -171,7 +160,7 @@
                                         
                                         </div>
                                     </div> 
-                                @endif  
+         @endif  
     @else
         <div class="px-6 py-4 text-red-400 font-bold font-serif text-sm">
             {{__('There are no records')}} .....

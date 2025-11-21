@@ -37,6 +37,15 @@ new #[Layout('components.layouts.auth')] class extends Component {
             ]);
         }
 
+        $user = Auth::user();
+        if ($user->isSuspended()){
+            Auth::logout();
+
+            throw ValidationException::withMessages([
+                'email' => __('User Account is Suspended'),
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 

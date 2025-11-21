@@ -36,9 +36,11 @@
                             </a> 
                         </div>
                         <div class="flex justify-end px-1 py-4 mr-4"> 
-                            <a href="{{ route('Pagos.Pagos.Create') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('New payment')}}" >
-                                <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
-                            </a>
+                            @can('admin.pagos.create')
+                                <a href="{{ route('Pagos.Pagos.Create') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('New payment')}}" >
+                                    <i class="fas fa-plus-circle fa-lg fa-stack"></i> {{__( 'New' )}}
+                                </a>
+                            @endcan    
                         </div>
                 </div>
         </form> 
@@ -59,10 +61,12 @@
                                                 <div>   
                                                     <button wire:click="ReciboPago({{$pago->id}})" type="button" class="cursor-pointer text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-sm text-xs px-5  text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-1" title="{{__('Print Receipt')}}"><i class="fas fa-file-invoice"></i> &nbsp; {{$pago->codigo}}</button>
                                                 </div>
-                                                <div class="flex justify-end">                                 
-                                                    <a href="#" wire:click="delete({{$pago->id}})" class="inline-flex border px-2 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
-                                                        <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
-                                                    </a>
+                                                <div class="flex justify-end"> 
+                                                    @can('admin.pagos.delete')                                
+                                                        <a href="#" wire:click="delete({{$pago->id}})" class="inline-flex border px-2 py-1 hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-100 dark:bg-red-200 dark:hover:bg-red-400 dark:focus:ring-red-600" title="{{__('Delete')}}">
+                                                            <i class="far fa-trash-alt fa-fw fa-xl" style="color: red;"></i>
+                                                        </a>
+                                                    @endcan    
                                                 </div>
                                             </div>
                                         </span>

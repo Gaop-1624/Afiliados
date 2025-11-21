@@ -29,7 +29,7 @@ class Eps extends Component
             ->orWhere('codigo', 'like', '%'.$this->search. '%') 
             ->orWhere('nombre', 'like', '%'.$this->search. '%') 
             ->orderBy('id','DESC')
-            ->paginate(6);
+            ->paginate(4);
 
         return view('livewire.epss.eps', [
             'Epss' => $eps

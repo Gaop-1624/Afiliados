@@ -65,7 +65,7 @@ class UserIndex extends Component
             ->orWhere('name', 'like', '%'.$this->search. '%') 
             ->orWhere('email', 'like', '%'.$this->search. '%') 
             ->orderBy('id','DESC')
-            ->paginate(6);
+            ->paginate(3);
 
         return view('livewire.user.user-index', [
             'users' => $users

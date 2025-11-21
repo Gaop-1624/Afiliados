@@ -17,7 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class PlanillasIndex extends Component
 {
-    public $id, $Nplanilla, $Vpagado, $planilla;
+    public $id, $Nplanilla, $Vpagado, $planilla, $search;
     public $modal = false;
     public $selectedPlanillaId = null;
     public $currentPlanilla = null;
@@ -141,7 +141,9 @@ class PlanillasIndex extends Component
         }
 
         $planillas = $query->orderBy('id','DESC')->paginate(3); */
-        $planillas = Planillas::with('empresa')->latest()->paginate(10);
+        $planillas = Planillas::with('empresa')
+                     ->orWhere('nplanilla', 'like', '%'.$this->search.'%')
+                     ->latest()->paginate(6);
       
         return view('livewire.planillas.planillas-index', [
                 'planillas' => $planillas,

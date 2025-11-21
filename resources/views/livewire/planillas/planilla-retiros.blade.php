@@ -35,11 +35,11 @@
                 </div> 
                 <div><h4 class="text-sm text-center font-semibold font-serif py-4 px-4 shadow-2xl m-2 uppercase"> {{__('Unpaid members')}} ({{ now()->format('F, Y') }})</h4></div>
                 <div class="flex justify-end px-1 py-4 mr-4"> 
-                        <a href="#" wire:click='RetirarAfiliados' class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-red-700 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
-
-{{--                       <a href="{{ route('Planillas.Create.Retiro') }}" wire:navigate class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
- --}}                          <i class="far fa-times-circle fa-lg"></i> &nbsp; {{__( 'Withdraw' )}}
+                    @can('admin.planillas.create')
+                      <a href="#" wire:click='RetirarAfiliados' class="h-8 px-10 py-1 text-xs font-medium text-center inline-flex items-center text-white bg-red-700 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 whitespace-nowrap" title="{{__('Generate Worksheets')}}" >
+                          <i class="far fa-times-circle fa-lg"></i> &nbsp; {{__( 'Withdraw' )}}
                       </a>
+                    @endcan
                 </div>
             </div>
     </x-card2>
@@ -58,9 +58,7 @@
                             <th class="px-2 py-1 font-serif text-xs text-left uppercase">{{__('name')}}</th>
                             <th class="px-2 py-1 font-serif text-xs text-left uppercase">{{__('Health (EPS)')}}</th>
                             <th class="px-2 py-1 font-serif text-xs text-left uppercase">{{__('Cell phone')}}</th>
-
                             <th class="px-2 py-1 font-serif text-xs text-left uppercase">{{__('Contract')}}</th>
-
                         </tr>
                     </thead>
                     <tbody>

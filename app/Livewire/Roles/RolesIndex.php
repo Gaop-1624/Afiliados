@@ -28,7 +28,7 @@ class RolesIndex extends Component
     {
         $roles = Role::where('name', 'like', '%'.request('search'). '%')
         ->orWhere('created_at', 'like', '%'.request('search'). '%') 
-        ->paginate(8);
+        ->paginate(4);
 
         return view('livewire.roles.roles-index', [
             'roles' => $roles

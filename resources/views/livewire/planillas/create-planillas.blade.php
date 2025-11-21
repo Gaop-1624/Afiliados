@@ -5,7 +5,9 @@
                         <p class="m-1">INTEGRALES GROUP JG S.A.S Nit : 901923262-2</p>
                     </div>
                     <div class="flex justify-end  py-2">
-                        <button wire:click.prevent="Create()" class="px-6 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300" title="Pagar Planiulla"> &nbsp; {{__('Create Spreadsheet')}} </button>
+                         @can('admin.planillas.create')
+                            <button wire:click.prevent="Create()" class="px-6 py-1 mr-2 h-7 text-xs font-semibold text-center inline-flex items-center text-white bg-blue-700 rounded-sm hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300" title="Pagar Planiulla"> &nbsp; {{__('Create Spreadsheet')}} </button>
+                        @endcan
                     </div>
                  </div>
                 <x-card2>

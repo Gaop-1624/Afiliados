@@ -517,5 +517,6 @@
     "Affiliates imported successfully.": "Afiliados importados con éxito",
     "The file must be an Excel or CSV file.": "El archivo debe ser un archivo Excel o CSV.",
     "List of Expenses": "Listado de Gastos",
-    "Spent Value": "Valor Gastado"
+    "Spent Value": "Valor Gastado",
+    "User Account is Suspended": "La cuenta de usuario está suspendida."
 }
