@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('afp_id')->constrained()->on('afps')->nullable();
             $table->double('salario', 10, 2);
             $table->foreignId('caja_id')->constrained()->on('cajas')->nullable();
-            $table->string('periodo');
+            $table->integer('periodo');
             $table->double('riesgo', 10);
             $table->string('claseArl');
             $table->foreignId('user_id')->constrained()->on('users')->nullable();

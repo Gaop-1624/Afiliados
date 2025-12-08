@@ -52,7 +52,7 @@ class CreatePlanillasDa extends Component
     } 
 
      public function Create(){
-        $empresaId = 1;
+        $empresaId = 5;
 
         $planillas = Pagos::with('contrato')
            ->where('nplanilla', 1)
@@ -65,25 +65,24 @@ class CreatePlanillasDa extends Component
         $totalCart = $planillas->sum('total_pagado');
 
         $periodo = Pagos::latest()->first();
-        $periodosalud = $periodo->periodo;
+        $ultimoperiodo = $periodo->periodo;
       
-        $fecha = now();
-        $mes = $fecha->format('m');
-        $ano = now()->year;
-        $periodopension = $ano."-".($mes -1);
-     
-              
+        $ano = (int) now()->year;
+        $periodosalud =  $ano."-".($ultimoperiodo);
+        $periodopension =  $ano."-".($ultimoperiodo -1);
+                    
          DB::beginTransaction();
 
             try { 
 
                
                     $planilla = Planillas::Create([
-                        'nplanilla' => 'Pendiente',
+                        'nplanilla' => 'Sin Pagar',
                         'total_pagado' => $totalCart,
                         'periodo_salud' => $periodosalud,
                         'periodo_pension' => $periodopension,
-                        'empresa_id' => '5'
+                        'empresa_id' => $empresaId,
+                        'user_id' => Auth::id()
                     ]);
    
                     foreach($planillas as $pago){

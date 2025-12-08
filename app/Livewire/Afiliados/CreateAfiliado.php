@@ -35,7 +35,7 @@ class CreateAfiliado extends Component
         $this->reset(['nombreEmpresa','contacto', 'celularEmpresa', 'direccionEmpresa', 'emailEmpresa', 'contactoEmpresa']);
     }
 
-     public function OpenModal(){
+    public function OpenModal(){
            $this->limpiarModal();
             $this->modal = true;
         }

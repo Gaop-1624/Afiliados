@@ -60,10 +60,10 @@
                     @endcan 
                     @can('admin.planillas.menu')
                         <flux:navlist.group  heading="{{__('Worksheets')}}" expandable :expanded="false">
-                            @can('admin.planillas.index')
+                            @can('admin.planillas.create')
                                 <flux:navlist.item href="{{route('Planillas.Planillas')}}" :current="request()->routeIs('Planillas.Planillas')" wire:navigate><i class="fas fa-file-medical-alt" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('trigger')}}</flux:navlist.item>
                             @endcan
-                            @can('admin.planillas.create')
+                            @can('admin.retiros.create')
                                 <flux:navlist.item href="{{route('Planillas.Create.Index')}}" :current="request()->routeIs('Planillas.Create.Index')" wire:navigate><i class="fab fa-r-project"></i> &nbsp; {{__('Generate Withdrawals')}}</flux:navlist.item>
                             @endcan
                         </flux:navlist.group>

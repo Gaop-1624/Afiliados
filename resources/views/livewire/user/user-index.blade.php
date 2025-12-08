@@ -67,7 +67,7 @@
                                        @else
                                            <button wire:click="suspend({{ $user->id}})" type="button" class="cursor-pointer text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-semibold rounded-xs text-xs px-5  text-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 py-1"><i class="fas fa-check-circle fa-fw"></i> &nbsp; {{__('Asset')}}</button>
                                         @endif 
-                                         @can('admin.users.edit')
+                                         @can('admin.users.edict')
                                             <a href="#" wire:click="update({{$user->id}})" class="inline-flex border px-1 py-1 hover:bg-blue-100 focus:ring-4 focus:outline-none focus:ring-blue-100 dark:bg-blue-200 dark:hover:bg-blue-400 dark:focus:ring-blue-600" title="{{__('Edit')}}">
                                                 <i class="far fa-edit fa-fw fa-xl" style="color: blue;"></i>
                                             </a> 

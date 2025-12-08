@@ -44,25 +44,16 @@ class CreatePlanillasDistri extends Component
             LivewireAlert::title('¡No hay pagos para procesar!')->info()->show();
             return;
         }
-       /*  $planillas = Pagos::with('contrato')
-           ->where('nplanilla', 1)
-           ->whereHas('contrato', function($q) use ($empresaId) {
-               $q->where('empresa_id', $empresaId);
-           })
-           ->get(); */
-
-       // $planillas = Pagos::with('contrato')->where('nplanilla', 1)->get();
-       // $totalCart = Pagos::where('nplanilla', 1)->sum('total_pagado');
+      
         $totalCart = $planillas->sum('total_pagado');
 
         $periodo = Pagos::latest()->first();
-        $periodosalud = $periodo->periodo;
+        $ultimoperiodo = $periodo->periodo;
       
-        $fecha = now();
-        $mes = $fecha->format('m');
-        $ano = now()->year;
-        $periodopension = $ano."-".($mes -1);
-     
+        $ano = (int) now()->year;
+        $periodosalud =  $ano."-".($ultimoperiodo);
+        $periodopension =  $ano."-".($ultimoperiodo -1);
+            
               
          DB::beginTransaction();
 
@@ -70,7 +61,7 @@ class CreatePlanillasDistri extends Component
 
                
                     $planilla = Planillas::Create([
-                        'nplanilla' => 'Pendiente',
+                        'nplanilla' => 'Sin Pagar',
                         'total_pagado' => $totalCart,
                         'periodo_salud' => $periodosalud,
                         'periodo_pension' => $periodopension,

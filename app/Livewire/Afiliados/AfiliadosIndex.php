@@ -6,6 +6,7 @@ use App\Exports\AfiliadosExport;
 use App\Imports\AfiliadosImport;
 use App\Models\Afiliado;
 use App\Models\contrato;
+use App\Models\Pagos;
 use Illuminate\Support\Facades\Auth;
 use Jantinnerezo\LivewireAlert\Facades\LivewireAlert;
 
@@ -85,15 +86,40 @@ class AfiliadosIndex extends Component
 
     function delete(Afiliado $afiliado)
     {
-        
-            $afiliado->delete();
-            LivewireAlert::title('¡Afiliado Eliminado!')
-            ->success()
-            ->show(); 
+        LivewireAlert::title('Delete Item')
+            ->text(__('Are you sure you want to delete affiliate?'))
+            ->asConfirm()
+            ->onConfirm('deleteItem', [$afiliado])
+            ->onDeny('keepItem', [$afiliado])
+            ->show();
 
-            $this->resetPage();
-            
     }
+
+     public function deleteItem(Afiliado $afiliado)
+    {
+        if (Pagos::whereHas('contrato', function($q) use ($afiliado) {
+                $q->where('afiliado_id', $afiliado->id);
+            })->exists()) {
+            LivewireAlert::title('¡No se Puede Eliminar por que existen Pagos asociados!')
+                                ->error()
+                                ->show();
+            return;
+        }
+                
+        $afiliado->delete();
+        LivewireAlert::title('¡Afiliado Eliminado!')
+                        ->success()
+                        ->show();
+
+        $this->resetPage();
+    }
+
+    public  function keepItem(Afiliado $afiliado)
+    {
+        $this->resetPage();
+    }
+
+
 
     public function render()
     {

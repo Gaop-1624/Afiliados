@@ -21,7 +21,7 @@
    </nav>
    <x-titulo><i class="fas fa-procedures" style="color: rgb(166, 168, 166)"></i> &nbsp; {{__('List Health')}}</x-titulo>
     <x-card2>
-          <form method="GET">
+            <form method="GET">
                 <div class="grid grid-cols-1 gap-1 lg:grid-cols-5 lg:gap-2">
                       @include('Tools.SearchBox')
                       <div class="justify-right px-10 py-4 mr-4">
@@ -45,8 +45,8 @@
                 </div>
             </form> 
     </x-card2>
-    @if ($Epss->count())
-        @foreach ($Epss as $eps)            
+        @if ($Epss->count())
+            @foreach ($Epss as $eps)            
                     <div class="items-start gap-1 inline-block  ml-2 mt-2">
                         <div class="flex flex-col gap-1 border-1 border-gray-200 rounded-lg p-2 bg-white dark:bg-gray-800 dark:border-gray-700">
                             <div class="leading-1.5 flex w-full max-w-[320px] flex-col bg-stone-50 shadow rounded-lg p-1">
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                     </div>
-             @endforeach 
+            @endforeach 
             
         @else
             <div class="px-6 py-4 text-red-400 font-bold font-serif text-sm">

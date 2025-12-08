@@ -168,6 +168,8 @@ class CreatePagos extends Component
         $contratoId = $afiliadoId[0]->contratos->last()->id;
         $periodo = Pagos::where('contrato_id', $contratoId)->latest('created_at')->first();
         $ultimoPeriodo = $periodo->periodo;
+        $periodoPago = $ultimoPeriodo +1;
+//dd($periodoPago);
 
         $user = Auth::id();
         $mes = now()->month;
@@ -204,7 +206,7 @@ class CreatePagos extends Component
                             'fecha_pago' => now(),
                             'salario' => $this->salario,
                             'contrato_id' => $contratoId,
-                            'periodo' => $periodo,
+                            'periodo' => $periodoPago,
                             'user_id' => $user,
                             'dias' => $this->dias,
                             'nplanilla' => $empresaid,

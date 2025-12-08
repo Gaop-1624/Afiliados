@@ -49,12 +49,17 @@ class CreatePlanillasDp extends Component
         $totalCart = $planillas->sum('total_pagado');
 
         $periodo = Pagos::latest()->first();
-        $periodosalud = $periodo->periodo;
+        $ultimoperiodo = $periodo->periodo;
+      
+        $ano = (int) now()->year;
+        $periodosalud =  $ano."-".($ultimoperiodo);
+        $periodopension =  $ano."-".($ultimoperiodo -1);
+       /*  $periodosalud = $periodo->periodo;
       
         $fecha = now();
         $mes = $fecha->format('m');
         $ano = now()->year;
-        $periodopension = $ano."-".($mes -1);
+        $periodopension = $ano."-".($mes -1); */
      
               
          DB::beginTransaction();
@@ -63,7 +68,7 @@ class CreatePlanillasDp extends Component
 
                
                     $planilla = Planillas::Create([
-                        'nplanilla' => 'Pendiente',
+                        'nplanilla' => 'Sin Pagar',
                         'total_pagado' => $totalCart,
                         'periodo_salud' => $periodosalud,
                         'periodo_pension' => $periodopension,

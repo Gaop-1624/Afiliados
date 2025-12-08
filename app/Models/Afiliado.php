@@ -55,7 +55,7 @@ class Afiliado extends Model
     } 
     
      public function pagos(){
-        return $this->hasMany(Pagos::class, 'afiliado_id');
+        return $this->hasMany(Pagos::class);
     } 
 
     //Relacion uno a muchos con el prestamo

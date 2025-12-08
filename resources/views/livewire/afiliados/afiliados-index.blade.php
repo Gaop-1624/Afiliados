@@ -85,7 +85,7 @@
                                 <div class="flex items-start bg-neutral-secondary-soft rounded-xl p-1">
                                     <div class="me-1.5">
                                         <span class="flex items-center gap-2 text-sm font-medium text-heading pb-2">
-                                            <span class="mb-1 px-4 text-xs font-bold text-white dark:text-white  bg-cyan-400"><i class="fab fa-affiliatetheme"></i> &nbsp; {{$afiliado->pnombre}} {{$afiliado->snombre}} {{$afiliado->papellido}}</span>
+                                            <span class="mb-1 px-4 text-xs font-bold text-white dark:text-white  bg-cyan-400 w-full"><i class="fab fa-affiliatetheme"></i> &nbsp; {{$afiliado->pnombre}} {{$afiliado->snombre}} {{$afiliado->papellido}}</span>
                                         </span>
                                             <div class="text-xs font-italic text-blue-400 border-b-2 mb-1">Cc: {{$afiliado->documento}} &nbsp; Celular: {{$afiliado->celular}}</div> 
                                             <span class="flex text-xs font-normal text-heading gap-2 justify-end pb-1">
@@ -128,7 +128,6 @@
                         </div>
                     </div>
                 @endforeach
-         
         @else
             <div class="px-6 py-4 text-red-400 font-bold font-serif text-sm">
                 {{__('There are no records')}} .....

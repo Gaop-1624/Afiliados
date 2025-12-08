@@ -132,7 +132,7 @@
                         </div> 
                     </div>
                 @endif 
-                  @if ($errors->first('fecha_nac')) 
+                @if ($errors->first('fecha_nac')) 
                     <div class="px-4 py-2 border bg-slate-100 h-12 col-span-2">
                         <div class="relative mb-4">
                             <input wire:model="fecha_nac" id="fecha_nac" type="date" class="font-semibold bg-red-50 border border-red-500 text-red-900 placeholder-red-700 text-sm rounded focus:ring-red-500 focus:border-red-500 block w-full p-2.5 h-8" placeholder=" " />
@@ -429,7 +429,7 @@
                                                                 <div class="col-span-2">
                                                                         <label for="name" class="block text-xs font-medium text-heading">{{__('Name')}}</label>
                                                                         <input wire:model="nombreEmpresa" type="text" name="name" id="name" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body h-8" placeholder="{{__('Name Labor Company')}}" required="">
-                                                                    </div>
+                                                                </div>
                                                                 @endif
                                                                 @if ($errors->first('contactoEmpresa'))
                                                                     <div class="col-span-2">

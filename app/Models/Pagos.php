@@ -33,6 +33,6 @@ class Pagos extends Model
     } */
 
      public function afiliado(){
-        return $this->belongsTo(Afiliado::class, 'afiliado_id', 'id');
+        return $this->belongsTo(Afiliado::class);
     }
 }

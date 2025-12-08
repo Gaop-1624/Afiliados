@@ -518,5 +518,9 @@
     "The file must be an Excel or CSV file.": "El archivo debe ser un archivo Excel o CSV.",
     "List of Expenses": "Listado de Gastos",
     "Spent Value": "Valor Gastado",
-    "User Account is Suspended": "La cuenta de usuario está suspendida."
+    "User Account is Suspended": "La cuenta de usuario está suspendida.",
+    "Are you sure you want to delete affiliate?": "¿Está seguro que desea eliminar este afiliado?",
+    "The form has already been downloaded": "La Planilla ya ha sido descargado"
+
+
 }
