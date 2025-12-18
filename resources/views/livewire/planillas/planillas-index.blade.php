@@ -51,16 +51,16 @@
                                 <div class="flex items-start bg-neutral-secondary-soft rounded-xl p-1">
                                     <div class="me-1.5">
                                         <span class="flex items-center gap-2 text-sm font-medium text-heading pb-1">
-                                            <span class="mb-1 px-4 text-sm font-bold font-sans text-white dark:text-white  bg-cyan-400 w-full" ><i class="fas fa-file-pdf fa-1x"></i> &nbsp; {{__('Form Number')}}: {{$planilla->nplanilla}}</span>
+                                            <span class="mb-1 px-4 text-xs font-bold font-sans text-white dark:text-white  bg-cyan-400 w-full" ><i class="fas fa-file-pdf fa-1x"></i> &nbsp; {{__('Form Number')}}: {{$planilla->nplanilla}}</span>
                                         </span>
                                         <div>
-                                             <p class="text-xs text-blue-600 border-b-2 mb-2 font-semibold">{{$planilla->empresa->nombre}}</p>
+                                             <p class="text-[10px] leading-snug tracking-tight text-blue-600 border-b-2 mb-2 font-semibold">{{$planilla->empresa->nombre}}</p>
                                         </div>
                                            <span class="flex text-xs font-normal text-heading gap-2 justify-right pb-1">
                                             @if ($planilla->status == 0)
                                                 <button  class="block text-white bg-blue-600 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-xs px-4 py-1 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" title="Pagar Planilla"
                                                     wire:click="OpenModal({{ $planilla->id }})"> 
-                                                    Pagar Planilla
+                                                    {{__('Pay Form')}}
                                                 </button>
                                                    @can('admin.afiliados.edict') 
                                                        <a href="#" wire:click.prevent="ExpotPlanillasAportes({{$planilla->id}})" class="inline-flex border px-1 py-1 hover:bg-green-100 focus:ring-4 focus:outline-none focus:ring-green-100 dark:bg-green-200 dark:hover:bg-green-400 dark:focus:ring-green-600" type="button" title="{{__('Download Contribution Form Online')}}">
@@ -73,8 +73,8 @@
                                                        </a>
                                                    @endcan  
                                             @else
-                                                <button disabled data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-green-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded text-xs px-4 py-1 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" title="La Planilla ya fue Pagada">
-                                                     Planilla Pagada
+                                                <button disabled data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-green-600 hover:bg-green-400 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded text-xs px-4 py-1 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button" title="{{__('Paid Form')}}">
+                                                     {{__('Paid Form')}}
                                                 </button>
                                                  @can('admin.afiliados.edict') 
                                                     <a href="#" class="inline-flex border px-1 py-1 hover:bg-green-100 focus:ring-4 focus:outline-none focus:ring-green-100 dark:bg-green-200 dark:hover:bg-green-400 dark:focus:ring-green-600" type="button" title="{{__('The form has already been downloaded')}}">

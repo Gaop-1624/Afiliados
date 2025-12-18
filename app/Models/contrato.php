@@ -48,7 +48,18 @@ class contrato extends Model
     } 
 
     //Relacion uno a muchos con la tabla pagos
-     public function empresa(){
-        return $this->hasMany(Empresa::class, 'empresa_id', 'id');
-    } 
+   /*   public function empresa(){
+        return $this->hasMany(Empresa::class, 'id', 'empresa_id');
+    }  */
+
+    public function empresa(){
+        return $this->belongsTo(Empresa::class, 'empresa_id', 'id');
+    }
+
+    public function arl(){
+        return $this->belongsTo(Arl::class, 'arl_id', 'id');
+    }
+
+
+
 }

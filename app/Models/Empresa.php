@@ -15,9 +15,13 @@ class Empresa extends Model
         'Pagina_web', 'dev', 'tenant_id', 'arl_id', 'caja_id'
     ];
 
-    public function arl(){
+    /* public function arl(){
         return $this->hasOne(Arl::class, 'id', 'arl_id');
-    } 
+    }  */
+
+        public function arl(){
+            return $this->belongsTo(Arl::class, 'arl_id', 'id');
+        }
 
     
     //Relacion uno a uno con la tabla tipo documento
@@ -42,7 +46,7 @@ class Empresa extends Model
 
     //Relacion uno a muchos con el contracto
      public function contrato(){
-        return $this->hasMany(Contrato::class, 'id', 'empresa_id');
+        return $this->hasMany(Contrato::class, 'empresa_id', 'id');
     }
 
     public function IngresoEgresos(){

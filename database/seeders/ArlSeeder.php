@@ -57,7 +57,7 @@ class ArlSeeder extends Seeder
         $arl6->t_documento_id  = "3";
         $arl6->nit ="860011153";  
         $arl6->codigo ="14-23";
-        $arl6->nombre ="Positiva Compañía de Seguros";
+        $arl6->nombre ="POSITIVA COMPAÑIA DE SEGUROS";
         $arl6 ->save();
 
         

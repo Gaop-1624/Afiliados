@@ -63,7 +63,7 @@ class PlanillasIndex extends Component
         }
 
         $this->validate([
-            'Nplanilla' => 'required|string',
+            'Nplanilla' => 'required|numeric',
             'Vpagado'   => 'required|numeric',
         ]);
       

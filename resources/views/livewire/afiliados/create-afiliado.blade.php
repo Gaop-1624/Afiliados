@@ -406,7 +406,7 @@
             
             <!-- Main modal -->
             @if ($modal)  
-                                     <div class="relative z-20" aria-labelledby="dialog-title" role="dialog" aria-modal="true">
+                <div class="relative z-20" aria-labelledby="dialog-title" role="dialog" aria-modal="true">
                                         <div class="fixed inset-0  transition-opacity" aria-hidden="true"></div>
                                             <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
                                                 <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -489,7 +489,7 @@
                                                 </div>
                                         
                                         </div>
-                                    </div>  
+                </div>  
             @endif                   
 
         </x-card> 

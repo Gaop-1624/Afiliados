@@ -90,8 +90,8 @@ class EditAfiliado extends Component
                     ['afiliado_id' => $afiliado->id],
                     [
                      //   'fecha_ingreso' => $afiliado->contratos->fecha_ingreso,
-                      //  'empresa_id' => $afiliado->contratos->empresa_id,
-                        'afiliado_id' => $afiliado->id,
+                       'empresa_id' => $afiliado->contratos->empresa_id,
+                      //   'afiliado_id' => $afiliado->id,
                        /*  'novedad' => $afiliado->contratos->novedad,
                         'periodo' => $afiliado->contratos->periodo, */
                         'eps_id' => $this->eps_id,

@@ -55,7 +55,7 @@
                                         <span class="flex items-center gap-2 text-sm font-medium text-heading pb-2">
                                             <span class="mb-1 px-4 text-xs font-bold text-white dark:text-white  bg-cyan-400"><i class="far fa-money-bill-alt" style="color: white"></i> &nbsp; {{$pago->contrato->afiliado->tdocumentos->alias}} {{$pago->contrato->afiliado->documento}} {{$pago->contrato->afiliado->pnombre}} {{$pago->contrato->afiliado->papellido}}</span>
                                         </span>
-                                        <div class="mb-1 text-xs font-italic font-semibold text-blue-400  uppercase border-b-2"> {{Carbon\Carbon::parse($pago->fecha_pago)->monthName}} &nbsp; Pagado: {{$pago->fecha_pago}} </div> 
+                                            <div class="mb-1 text-xs font-italic font-semibold text-blue-400  uppercase border-b-2"> {{ Carbon\Carbon::create()->month((int) $pago->periodo)->translatedFormat('F') }} &nbsp; Pagado: {{$pago->fecha_pago}} </div> 
                                             <span class="flex text-xs font-normal text-heading gap-2 justify-left pb-1 mb-1">
                                             <div class="grid grid-cols-2 gap-2"> 
                                                 <div>   

@@ -30,14 +30,37 @@ class Afiliado extends Model
     } 
 
      //Relacion uno a uno con la tabla tipo documento
-     public function empresalaboral(){
+   /*   public function empresalaboral(){
         return $this->belongsTo(EmpresaLaboral::class);
-    }
+    } */
 
     //Relacion uno a muchos con el contracto
     public function contratos(){
         return $this->hasMany(Contrato::class, 'afiliado_id', 'id');
     }
+
+    // Devuelve el contrato más reciente (o null)
+    public function contratoActual()
+    {
+        return $this->contratos()->latest('created_at')->first();
+    }
+
+    // Devuelve la empresa asociada (prioriza empresaLaboral, si no existe usa la empresa del contrato actual)
+        public function empresaAsignada()
+        {
+            if ($this->empresaLaboral) {
+                return $this->empresaLaboral;
+            }
+
+            $contrato = $this->contratoActual();
+            return $contrato ? $contrato->empresa : null;
+        }
+
+        // Accesor para usar en Blade: $afiliado->empresa_nombre
+        public function getEmpresaNombreAttribute()
+        {
+            return optional($this->empresaAsignada())->nombre;
+        }
 
        //Relacion uno a uno con la tabla Caja
    /*  public function cajas(){
@@ -61,7 +84,13 @@ class Afiliado extends Model
     //Relacion uno a muchos con el prestamo
      public function planillas(){
         return $this->hasMany(planillas::class, 'afiliado_id', 'id');
-    }  
+    } 
+    
+    public function empresaLaboral()
+{
+    return $this->belongsTo(\App\Models\Empresa::class, 'empresalaboral_id', 'id');
+}
+
 
    //Relacion uno a muchos con el 
    /*  public function pagos(){

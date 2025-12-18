@@ -210,15 +210,13 @@ class CreateAfiliado extends Component
                   ]);
 
                     $userall = User::find(Auth::user()->id);
-                    $mes = now()->month;
-                    $ano = now()->year;
-                    $perido = $ano."-".$mes;
+                 
+                    $perido = (int) now()->month;
                     $fecha = now();
                     $dia = $fecha->day;
                     $ultimodia = 31;
                     $dias = $ultimodia - $dia;
-                    //$dias = $fecha->addDays(1)->format('d');
-//dd($user);
+
                     $contrato = contrato::create([
                         'fecha_ingreso' => $fecha,
                         'afiliado_id' => $afiliado->id,
@@ -284,7 +282,7 @@ class CreateAfiliado extends Component
 
                     $this->closeModal();
 
-              } catch (\Throwable $th) {
+               } catch (\Throwable $th) {
                     DB::rollBack();
                     LivewireAlert::title('¡Error al Crear al Afiliado!')
                         ->error()
@@ -292,7 +290,7 @@ class CreateAfiliado extends Component
                         ->show();
         }   
            
-        DB::commit();      
+        DB::commit();       
     } 
 
     public function mount()

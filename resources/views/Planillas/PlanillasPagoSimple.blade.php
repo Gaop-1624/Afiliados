@@ -37,16 +37,16 @@
             <tbody>
                 <tr>
                     <td>1</td><td>1</td><td>1</td>
-                    <td>{{$empresa[0]->nombre}}</td>
+                    <td>{{ $empresaNombre }}</td>
                     <td>NIT</td>
-                    <td>{{$empresa[0]->nit}}</td>
-                    <td>{{$empresa[0]->dev}}</td>
+                    <td>{{ $empresaNit }}</td>
+                    <td>{{ $empresaDev }}</td>
                     <td>E</td><td></td><td></td><td>S</td>
-                    <td>1</td><td>{{$empresa[0]->nombre}}</td>
-                    <td>{{ $empresa[0]->arl->codigo ?? '' }}</td>
-                    <td>{{$planillas[0]->periodo_pension}}</td>
-                    <td>{{$planillas[0]->periodo_salud}}</td>
-                    <td></td><td></td><td>7</td><td></td><td>1</td><td>88</td>
+                    <td>1</td><td>{{ $empresaNombre }}</td>
+                    <td>{{ $codigoArl }}</td>
+                    <td>{{ $planillas->periodo_pension }}</td>
+                    <td>{{ $planillas->periodo_salud }}</td>
+                    <td></td><td></td><td>1</td><td></td><td>1</td><td>88</td>
                 </tr>
             </tbody>
         </table>
@@ -155,35 +155,41 @@
             </thead>
             <tbody>
                 @php $contador = $contador ?? 1; @endphp
-
-                @foreach ($planillas as $planilla)
-                    @foreach ($planilla->Detalleplanillas as $item)
-                        @php
-                            $afiliado = $item->afiliado;
+                @foreach ($detalles as $detalle)
+                    @php
+                            $afiliado = $detalle->afiliado;
+                             // obtener un contrato concreto: último (o cambiar por ->first() si corresponde)
                             $contrato = $afiliado->contratos->last();
-                           $pago = $contrato ? $contrato->pagos->last() : null;
-                        @endphp
+                             // obtener un pago concreto del contrato (último)
+                            $fechaIngreso = $contrato->fecha_ingreso;
+                            $carbonDate = \Carbon\Carbon::parse($fechaIngreso);
+                            $mesingreso = $carbonDate->month + 1;
+                            $mesActual = \Carbon\Carbon::now()->format('m');
 
-                        <tr wire:key="detalle-{{ $planilla->id }}-{{ $item->id }}">
-                            <td>2</td>
-                            <td>{{ $contador++ }}</td>
-                            <td>{{ $afiliado->tdocumentos->alias ?? '' }}</td>
-                            <td>{{ $afiliado->documento ?? '' }}</td>
+                            if ($mesingreso == $mesActual){
+                                $pago = $contrato ? $contrato->pagos->first() : null;
+                            }else{
+                                $pago = $contrato ? $contrato->pagos->last() : null;
+                            } 
+                    @endphp
+                    <tr wire:key="detalle-{{ $detalle->id }}">
+                        <td>2</td>
+                        <td>{{ $contador++ }}</td>
+                        <td>{{ $detalle->afiliado->tdocumentos->alias ?? '' }}</td>
+                        <td>{{ $detalle->afiliado->documento ?? '' }}</td>
+                        <td>1</td>
+                        @if ($contrato->afp_id == "10")
                             <td>1</td>
-
-                            @if ($contrato->afp_id == "10")
-                                <td>1</td>
-                            @else 
-                                <td>0</td>
-                            @endif 
-
-                            <td></td><td></td>
-                            <td>76</td><td>1</td>
-                            <td>{{ $afiliado->papellido ?? '' }}</td>
-                            <td>{{ $afiliado->sapellido ?? '' }}</td>
-                            <td>{{ $afiliado->pnombre ?? '' }}</td>
-                            <td>{{ $afiliado->snombre ?? '' }}</td>
-                            @if ($pago->novedad == "Todos los sistemas (ARL, AFP, CCF, EPS)")
+                        @else 
+                            <td>0</td>
+                        @endif 
+                        <td></td><td></td>
+                        <td>76</td><td>1</td>
+                        <td>{{ $detalle->afiliado->papellido ?? '' }}</td>
+                        <td>{{ $detalle->afiliado->sapellido ?? '' }}</td>
+                        <td>{{ $detalle->afiliado->pnombre ?? '' }}</td>
+                        <td>{{ $detalle->afiliado->snombre ?? '' }}</td> 
+                        @if ($pago->novedad == "Todos los sistemas (ARL, AFP, CCF, EPS)")
                                 <td>X</td>
                             @else
                                 <td></td>
@@ -219,7 +225,6 @@
                             @endif 
                             <td>{{ $pago->salario ?? '' }}</td>
                             <td>{{ $pago->salario ?? '' }}</td>
-                            
                             @if ($contrato->caja_id == "3")
                                 <td>1</td>
                             @else
@@ -238,20 +243,18 @@
                             @else
                                 <td>{{ ($pago->salario * 16)/100 ?? '' }}</td>
                             @endif
-
-                            <td>0</td><td>0</td><td>0</td><td>{{ $contrato->eps->tarifaeps ?? '' }}</td>
+                             <td>0</td><td>0</td><td>0</td><td>{{ $contrato->eps->tarifaeps ?? '' }}</td>
                             <td>{{ ($pago->salario * 4)/100 ?? '' }}</td>
                             <td>0</td><td></td><td>0</td><td></td><td>0</td><td>{{ $contrato->riesgo ?? '' }}
                             <td>0</td><td>{{ $pago->salario * $contrato->riesgo ?? '' }}</td>
                             <td>{{ $contrato->cajas->tarifacaja ?? '' }}
                             <td>{{ $pago->salario * $contrato->cajas->tarifacaja ?? '' }}</td> 
                             <td>0</td><td>0</td><td>0</td><td>0</td><td>0,005</td><td>0</td><td>0,01</td><td>0</td><td></td><td></td>    
-                            <td>S</td><td>{{ $empresa[0]->arl->codigo ?? '' }}</td><td>{{ $contrato->claseArl ?? '' }}</td>
+                            <td>S</td><td>{{$codigoArl }}</td><td>{{ $contrato->claseArl ?? '' }}</td>
                             <td></td><td>{{$contrato->fecha_ingreso}}</td><td>{{$contrato->fecha_retiro}}</td><td></td><td></td><td></td><td></td><td></td><td></td>
                             <td></td><td></td><td></td><td></td><td></td><td></td><td></td>    
                             <td>0</td><td>240</td> <td></td><td>1900101</td> 
-                        </tr>
-                    @endforeach
+                    </tr>
                 @endforeach
             </tbody> 
         </table>

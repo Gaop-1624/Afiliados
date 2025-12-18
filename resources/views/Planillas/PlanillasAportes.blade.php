@@ -8,6 +8,8 @@
     </head>
     <body>
         <br><br><br><br><br><br> 
+       
+
         <div>   
             <h5>Datos Generales de la Liquidación</h5>
         </div>
@@ -29,8 +31,17 @@
          <table>
             <thead>
                 <tr>
-                    <th style='background-color: #008000; color: #f8f9fa;'>Pension</th><th style='background-color: #008000; color: #f8f9fa;'></th><th style='background-color: #008000; color: #f8f9fa;'>Salud</th><th style='background-color: #008000; color: #f8f9fa;'>Planilla</th><th style='background-color: #008000; color: #f8f9fa;'>Fecha</th>
-                    <th style='background-color: #008000; color: #f8f9fa;'>Clave</th><th style='background-color: #008000; color: #f8f9fa;'>Codigo</th><th style='background-color: #008000; color: #f8f9fa;'>Nombre</th><th style='background-color: #008000; color: #f8f9fa;'>Aportante</th><th style='background-color: #008000; color: #f8f9fa;'></th><th style='background-color: #008000; color: #f8f9fa;'>Riesgos</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Pension</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'></th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Salud</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Planilla</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Fecha</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Clave</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Codigo</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Nombre</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Aportante</th>
+                    <th style='background-color: #008000; color: #f8f9fa;'></th>
+                    <th style='background-color: #008000; color: #f8f9fa;'>Riesgos</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +49,7 @@
                     <td class="bgcolor-green-100">{{$planillas->periodo_pension}}</td><td></td>
                     <td>{{$planillas->periodo_salud}}</td>
                     <td>E</td><td></td><td></td><td>2</td><td></td><td>EMPLEADOR</td>
-                    <td></td><td>COLMENA</td>
+                    <td></td><td>{{ $arlNombre }}</td>
                 </tr>
             </tbody>
         </table>
@@ -231,7 +242,7 @@
                         <td></td><td>Sin Riesgo</td><td></td><td></td><td></td><td></td><td></td><td></td><td>NINGUNA</td>
                         <td>{{ $contrato->eps->nombre ?? '' }}</td><td>{{ $pago->dias ?? '' }}</td><td>{{ $pago->salario ?? '' }}</td>
                         <td>{{ $contrato->eps->tarifaeps ?? '' }}</td><td></td><td></td><td></td><td></td><td></td><td></td>
-                        <td>NINGUNA</td><td>COLMENA</td><td>{{ $pago->dias ?? '' }}</td><td>{{ $pago->salario ?? '' }}</td>    
+                        <td>NINGUNA</td><td>{{ $arlNombre }}</td><td>{{ $pago->dias ?? '' }}</td><td>{{ $pago->salario ?? '' }}</td>    
                         <td>{{ $contrato->riesgo ?? '' }}</td><td>{{ $contrato->claseArl ?? '' }}</td>
                         <td></td><td></td><td></td><td>{{ $pago->dias ?? '' }}</td><td>{{ $contrato->cajas->nombre ?? '' }}</td>
                         <td>{{ $pago->salario ?? '' }}</td><td>{{ $contrato->cajas->tarifacaja ?? '' }}</td>
